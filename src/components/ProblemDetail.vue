@@ -60,8 +60,11 @@ export default defineComponent({
   width: 80%;
   max-width: 600px;
   color: #ffffff;
+  overflow-y: auto;
+  max-height: 90vh;
 }
 
+/* 關閉按鈕樣式 */
 .close-btn {
   position: absolute;
   top: 10px;
@@ -71,8 +74,14 @@ export default defineComponent({
   font-size: 24px;
   cursor: pointer;
   color: #fff;
+  transition: transform 0.2s;
 }
 
+.close-btn:hover {
+  transform: scale(1.1);
+}
+
+/* 調整難度標籤的顏色 */
 .easy {
   color: green;
 }
@@ -85,6 +94,7 @@ export default defineComponent({
   color: red;
 }
 
+/* 我的解答的樣式 */
 .code-block {
   background: #070606;
   padding: 10px;
@@ -92,5 +102,59 @@ export default defineComponent({
   white-space: pre-wrap;
   font-family: 'Courier New', monospace;
   color: #fff;
+  font-size: 0.9rem;
+  overflow-x: auto;
+}
+
+/* 手機版優化 */
+@media (max-width: 768px) {
+  .problem-detail {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .close-btn {
+    font-size: 20px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  p,
+  h3 {
+    font-size: 1rem;
+  }
+
+  .code-block {
+    font-size: 0.85rem;
+  }
+}
+
+/* 更小的螢幕，例如手機 */
+@media (max-width: 480px) {
+  .problem-detail {
+    width: 95%;
+    padding: 12px;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  p,
+  h3 {
+    font-size: 0.9rem;
+  }
+
+  .code-block {
+    font-size: 0.8rem;
+  }
+
+  .close-btn {
+    top: 8px;
+    right: 8px;
+    font-size: 18px;
+  }
 }
 </style>

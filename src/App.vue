@@ -66,4 +66,20 @@ html, body {
 .logo-image:hover {
   transform: scale(1.05);
 }
+
+/* 平板裝置的樣式優化 */
+@media (max-width: 1024px) {
+  .logo-image {
+    max-width: 70px;
+  }
+}
+
+/* 手機裝置的樣式優化 */
+@media (max-width: 768px) {
+  .logo-image {
+    margin: 10px;
+    padding: 0px;
+    max-width: 40px;
+  }
+}
 </style>

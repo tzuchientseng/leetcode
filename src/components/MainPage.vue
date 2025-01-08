@@ -1,6 +1,6 @@
 <template>
   <div class="main-page">
-    <h1 style="font-size: 2.5rem;">我的刷題記錄筆記</h1>
+    <h1 style="font-size: 2.0rem;">我的刷題記錄筆記</h1>
 
     <!-- 搜尋區 -->
     <SearchBar v-model="searchQuery" />
@@ -87,10 +87,45 @@ export default defineComponent({
 
 <style scoped>
 .main-page {
-  padding: 30px;
+  padding: 20px;
+  height: 70vh;
+  width: 90vw;
   font-family: Arial, sans-serif;
   background-color: gray;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+}
+
+/* 標題字體大小 */
+h1 {
+  font-size: 2rem;
+  text-align: center;
+}
+
+/* 手機版的優化 */
+@media (max-width: 768px) {
+  .main-page {
+    padding: 20px;
+    width: 97vw;
+    border-radius: 20px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+
+/* 更小的螢幕，例如手機橫放或更小的裝置 */
+@media (max-width: 480px) {
+  .main-page {
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 37px;
+  }
+
+  h1 {
+    font-size: 1.25rem;
+  }
 }
 </style>
