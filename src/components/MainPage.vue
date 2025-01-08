@@ -1,71 +1,85 @@
 <template>
   <div class="main-page">
-    <h1>我的刷題目筆記</h1>
-    
-    <!-- Search Bar -->
-    <input
-      v-model="searchQuery"
-      type="text"
-      placeholder="Search problems..."
-      class="search-bar"
+    <h1 style="font-size: 2.5rem;">我的刷題記錄筆記</h1>
+
+    <!-- 搜尋區 -->
+    <SearchBar v-model="searchQuery" />
+
+    <!-- 題目列表 -->
+    <ProblemList :problems="filteredProblems" @selectProblem="selectProblem" />
+
+    <!-- 動態載入題目詳情：component 即為 TwoSum (或其他) -->
+    <component
+      :is="selectedProblemComponent"
+      v-if="selectedProblemComponent"
+      @close="closeDetail"
     />
-
-    <!-- Filters -->
-    <div class="filters">
-      <button @click="filterByDifficulty('easy')">Easy</button>
-      <button @click="filterByDifficulty('medium')">Medium</button>
-      <button @click="filterByDifficulty('hard')">Hard</button>
-    </div>
-
-    <!-- Problem List -->
-    <ul class="problem-list">
-      <li v-for="problem in filteredProblems" :key="problem.id">
-        <span :class="problem.difficulty">{{ problem.id }}. {{ problem.title }}</span>
-        <span class="difficulty">{{ problem.difficulty }}</span>
-      </li>
-    </ul>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed } from 'vue';
+
+// 引入題目
+import { defineAsyncComponent } from 'vue';
+const TwoSum = defineAsyncComponent(() => import('./problems/TwoSum.vue'));
+
+// 其他元件
+import SearchBar from './SearchBar.vue';
+import ProblemList from './ProblemList.vue';
+import ProblemDetail from './ProblemDetail.vue';
 
 export default defineComponent({
-  name: "MainPage",
+  name: 'MainPage',
+  components: { SearchBar, ProblemList, ProblemDetail },
   setup() {
-    // Problem List
+    // 將引入的元件(題目)放到 problems 清單中
+    // 這裡可以放一個或多個題目
     const problems = ref([
-      { id: 1, title: "Two Sum", difficulty: "easy" },
-      { id: 2, title: "Add Two Numbers", difficulty: "medium" },
-      { id: 3, title: "Longest Substring Without Repeating Characters", difficulty: "medium" },
-      { id: 4, title: "Median of Two Sorted Arrays", difficulty: "hard" },
-      { id: 5, title: "Valid Parentheses", difficulty: "easy" },
+      // 你可以給它一個必要的屬性，如 title, componentName 等
+      {
+        title: 'Two Sum',
+        component: TwoSum, // 指向匯入的 Vue 元件
+      },
+      // 未來可再加入更多題目
     ]);
 
-    // Search Query
-    const searchQuery = ref("");
+    // 搜尋關鍵字
+    const searchQuery = ref('');
 
-    // Filter Logic
+    // 依據搜尋字串篩選
     const filteredProblems = computed(() => {
-      return problems.value.filter((problem) => {
-        return (
-          problem.title.toLowerCase().includes(searchQuery.value.toLowerCase())
-        );
-      });
+      return problems.value.filter((problem) =>
+        problem.title.toLowerCase().includes(searchQuery.value.toLowerCase())
+      );
     });
 
-    // Filter by Difficulty
-    const filterByDifficulty = (difficulty: string) => {
-      problems.value = problems.value.filter(
-        (problem) => problem.difficulty === difficulty
-      );
+    // 「選中的題目」相關狀態
+    const selectedProblem = ref<any>(null);
+
+    // 目前顯示的「題目元件」
+    const selectedProblemComponent = ref<any>(null);
+
+    // 點擊某個題目時
+    const selectProblem = (problem: any) => {
+      selectedProblem.value = problem;
+      // 直接把對應的 Vue 元件指派給 selectedProblemComponent
+      selectedProblemComponent.value = problem.component;
+    };
+
+    // 關閉彈窗
+    const closeDetail = () => {
+      selectedProblem.value = null;
+      selectedProblemComponent.value = null;
     };
 
     return {
-      problems,
       searchQuery,
       filteredProblems,
-      filterByDifficulty,
+      selectedProblem,
+      selectedProblemComponent,
+      selectProblem,
+      closeDetail,
     };
   },
 });
@@ -73,58 +87,10 @@ export default defineComponent({
 
 <style scoped>
 .main-page {
-  padding: 20px;
+  padding: 30px;
   font-family: Arial, sans-serif;
-}
-
-.search-bar {
-  width: 40%;
-  padding: 10px;
-  margin-bottom: 20px;
-}
-
-.filters {
-  margin-bottom: 20px;
-}
-
-.filters button {
-  margin-right: 10px;
-  padding: 10px 20px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.filters button:hover {
-  background-color: #0056b3;
-}
-
-.problem-list {
-  list-style: none;
-  padding: 0;
-}
-
-.problem-list li {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-}
-
-.problem-list li span.difficulty {
-  float: right;
-  text-transform: capitalize;
-}
-
-.easy {
-  color: green;
-}
-
-.medium {
-  color: orange;
-}
-
-.hard {
-  color: red;
+  background-color: gray;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 </style>

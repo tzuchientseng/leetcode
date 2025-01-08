@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <picture>
-      <!-- 新增 a 標籤包裹圖片，設定 target="_blank" -->
-      <a href="https://leetcode.com" target="_blank">
+      <a href="https://leetcode.com/problemset/" target="_blank">
         <img alt="Vue logo" src="./assets/logo.png" class="logo-image" />
       </a>
     </picture>
@@ -28,7 +27,15 @@ export default defineComponent({
   padding: 0;
 }
 
-/* 設定背景為灰黑色 */
+/* 移除預設的 margin 和 padding，防止留白 */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* 設置 #app 的高度和填充 */
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -37,6 +44,10 @@ export default defineComponent({
   color: #ffffff;
   background-color: #2b2b2b;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 圖片樣式優化 */
