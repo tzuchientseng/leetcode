@@ -12,6 +12,8 @@ npm install
 
 ```
 npm run serve
+`npm run serve -- --port 8080`
+// 外部網路
 ```
 
 ### Compiles and minifies for production
