@@ -1,6 +1,6 @@
 <template>
   <div class="main-page">
-    <h1 style="font-size: 2.0rem;">我的刷題記錄筆記</h1>
+    <h1 style="font-size: 2.0rem;">Notes / Records</h1>
 
     <!-- 搜尋區 -->
     <SearchBar v-model="searchQuery" />
@@ -107,7 +107,7 @@ h1 {
 @media (max-width: 768px) {
   .main-page {
     padding: 20px;
-    width: 97vw;
+    width: 87vw;
     border-radius: 20px;
   }
 
@@ -120,6 +120,7 @@ h1 {
 @media (max-width: 480px) {
   .main-page {
     padding: 15px;
+    width: 87vw;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
     border-radius: 37px;
   }
