@@ -4,7 +4,10 @@
     <button class="close-btn" @click="$emit('close')">&times;</button>
 
     <!-- 題目標題 -->
-    <h2>Two Sum</h2>
+    <h2>1.Two Sum (easy)</h2>
+    <a href="https://leetcode.com/problems/two-sum/description/" target="_blank">
+      https://leetcode.com/problems/two-sum/description/
+    </a>
 
     <!-- 題目敘述 -->
     <p>
@@ -14,19 +17,28 @@
     </p>
 
     <!-- 我的解答 -->
-    <h3>我的解答</h3>
-    <pre class="code-block">{{ codeString }}</pre>
+    <h3>-- 我的解答 --</h3>
+    <pre class="code-block">
+      <code class="language-javascript">{{ codeString }}</code>
+    </pre>
 
     <!-- 測試用例 -->
-    <h3>測試用例</h3>
-    <pre class="code-block">{{ testCodeString }}</pre>
+    <h3>-- 測試用例 --</h3>
+    <pre class="code-block">
+      <code class="language-javascript">{{ testCodeString }}</code>
+    </pre>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import Prism from 'prismjs';
 
-// 題目資訊 (可以依需求增加 id/difficulty 等欄位)
+onMounted(() => {
+  Prism.highlightAll(); // 啟用語法高亮
+});
+
+// 題目資訊
 const codeString = ref(`
 /*
   Method 1: Brute Force
@@ -62,7 +74,7 @@ const twoSumHashMap = (nums: number[], target: number): number[] => {
   Method 3: Functional Programming (Reduce)
   Time complexity o(n)
   Space complexity o(n)
-*
+*/
 const twoSumReduce = (nums: number[], target: number): number[] => {
   // array.reduce((accumulator, currentValue(key), currentIndex?(value), array?) => { ... }, initialValue);
   const result = nums.reduce(
@@ -88,9 +100,10 @@ const twoSumReduce = (nums: number[], target: number): number[] => {
 };
 `);
 
-const testCodeString = ref(`console.log(twoSum([2, 7, 11, 15], 9)); // [0, 1]
-console.log(twoSum([3, 2, 4], 6)); // [1, 2]
-console.log(twoSum([3, 3], 6)); // [0, 1]`);
+const testCodeString = ref(`
+console.log(twoSumBruteForce([2, 7, 11, 15], 9)); // [0, 1]
+console.log(twoSumHashMap([3, 2, 4], 6)); // [1, 2]
+console.log(twoSumReduce([3, 3], 6)); // [0, 1]`);
 </script>
 
 <style scoped>
@@ -99,37 +112,51 @@ console.log(twoSum([3, 3], 6)); // [0, 1]`);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #1e1e2f;
+  background: rgb(65, 64, 64);
   padding: 24px;
   border-radius: 12px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-  width: 90%;
+  width: 70%;
   max-width: 90%;
   color: #f1f1f1;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow-y: auto; /* 垂直滾軸 */
-  max-height: 90vh; /* 限制視窗高度 */
+  overflow-y: auto;
+  max-height: 90vh;
 }
 
 h2 {
   font-size: 20px;
-  margin-bottom: 12px;
-  color: #ffcc00;
-  text-align: left;
+  margin-bottom: 0px;
+  color: green;
 }
 
 p {
   font-size: 14px;
   line-height: 1.6;
-  margin-bottom: 20px;
-  text-align: left;
+  margin: 10px;
 }
 
 h3 {
   font-size: 16px;
   margin-top: 10px;
   color: #ff9900;
-  text-align: left;
+}
+
+a {
+  color: #ff9900;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+a:hover {
+  color: #ffcc00;
+  text-shadow: 0 0 8px #ffcc00;
+}
+
+a:active {
+  color: #ffaa00;
 }
 
 .close-btn {
@@ -139,6 +166,7 @@ h3 {
   background: none;
   border: none;
   font-size: 28px;
+  outline: none;
   cursor: pointer;
   color: #ff5555;
   transition: transform 0.2s ease, color 0.2s ease;
@@ -150,17 +178,16 @@ h3 {
 }
 
 .code-block {
-  background: #2e2e38;
-  padding: 16px;
   border-radius: 10px;
   white-space: pre-wrap;
   font-family: 'Courier New', monospace;
+  /* font-family: 'Fira Code', 'Courier New', monospace; */
+  max-height: 500px; /* 限制程式碼區塊高度 */
   color: #f8f8f2;
   font-size: 14px;
   overflow-x: auto; /* 水平滾軸 */
   overflow-y: auto; /* 垂直滾軸 */
   border: 1px solid #444;
-  max-height: 600px; /* 限制程式碼區塊高度 */
   text-align: left; /* 確保程式碼區塊靠左對齊 */
 }
 
@@ -213,7 +240,7 @@ button {
 
   .code-block {
     font-size: 12px;
-    max-height: 320px; /* 限制程式碼區塊高度 */
+    max-height: 300px; /* 限制程式碼區塊高度 */
   }
 }
 </style>

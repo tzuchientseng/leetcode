@@ -4,22 +4,30 @@
       <span :class="problem.difficulty" @click="$emit('selectProblem', problem)">
         {{ problem.id }}. {{ problem.title }}
       </span>
-      <span class="difficulty">{{ problem.difficulty }}</span>
+      <span v-if="problem.difficulty" class="difficulty">{{ problem.difficulty }}</span>
     </li>
   </ul>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
+
+// 修改 Problem 介面，讓 component 屬性為可選的
+interface Problem {
+  id: number;
+  title: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  component?: any; // Vue 元件的引用
+}
 
 export default defineComponent({
   name: 'ProblemList',
   props: {
     problems: {
-      type: Array,
-      required: true
-    }
-  }
+      type: Array as PropType<Problem[]>,
+      required: true,
+    },
+  },
 });
 </script>
 
