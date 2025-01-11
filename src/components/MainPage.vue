@@ -34,7 +34,7 @@ import ProblemList from './ProblemList.vue';
 interface Problem {
   id: number;
   title: string;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: 'easy' | 'medium' | 'hard' | 'other';
   component?: any;
 }
 
@@ -45,8 +45,19 @@ export default defineComponent({
     // 題目清單
     const problems = ref<Problem[]>([
       {
+        id: 0,
+        title: 'Euclidean Algorithm',
+        difficulty: 'other',
+        // component: Euclidean,
+      },      {
         id: 1,
-        title: 'Two Sum',
+        title: 'Fibonacci',
+        difficulty: 'other',
+        // component: Fibonacci,
+      },      
+      {
+        id: 2,
+        title: '1_Two Sum',
         difficulty: 'easy',
         component: TwoSum,
       },

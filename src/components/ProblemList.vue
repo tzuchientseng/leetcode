@@ -7,7 +7,8 @@
       @click="$emit('selectProblem', problem)"
     >
       <span>
-        {{ problem.id }}. {{ problem.title }}
+        <!-- {{ problem.id }}. {{ problem.title }} -->
+        {{ problem.title }}
       </span>
       <span v-if="problem.difficulty" class="difficulty">{{ problem.difficulty }}</span>
     </li>
@@ -21,7 +22,7 @@ import { defineComponent, PropType } from 'vue';
 interface Problem {
   id: number;
   title: string;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: 'easy' | 'medium' | 'hard' | 'other';
   component?: any; // Vue 元件的引用
 }
 
@@ -88,6 +89,11 @@ export default defineComponent({
 
 .hard {
   color: #c0392b;
+  font-weight: bold;
+}
+
+.other {
+  color: gray;
   font-weight: bold;
 }
 
