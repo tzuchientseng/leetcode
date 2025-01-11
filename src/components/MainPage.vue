@@ -9,11 +9,13 @@
     <ProblemList :problems="filteredProblems" @selectProblem="selectProblem" />
 
     <!-- 動態載入題目詳情 -->
-    <component
-      :is="selectedProblemComponent"
-      v-if="selectedProblemComponent"
-      @close="closeDetail"
-    />
+    <transition name="popup">
+      <component
+        :is="selectedProblemComponent"
+        v-if="selectedProblemComponent"
+        @close="closeDetail"
+      />
+    </transition>
   </div>
 </template>
 
@@ -106,6 +108,24 @@ export default defineComponent({
 h1 {
   font-size: 2rem;
   text-align: center;
+}
+
+/* 過渡效果：由中間向外彈開 */
+.popup-enter-active,
+.popup-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.popup-enter-from,
+.popup-leave-to {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.popup-enter-to,
+.popup-leave-from {
+  transform: scale(1);
+  opacity: 1;
 }
 
 /* 手機版的優化 */

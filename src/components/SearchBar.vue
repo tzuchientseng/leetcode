@@ -1,11 +1,12 @@
 <template>
-  <input
-    :value="modelValue"
-    @input="$emit('update:modelValue', $event.target.value)"
-    type="text"
-    placeholder="Search problems..."
-    class="search-bar"
-  />
+<input
+  :value="modelValue"
+  @input="handleInput"
+  type="text"
+  placeholder="   Search ..."
+  class="search-bar"
+/>
+
 </template>
 
 <script lang="ts">
@@ -16,19 +17,35 @@ export default defineComponent({
   props: {
     modelValue: {
       type: String,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
+  methods: {
+    handleInput(event: Event) {
+      const target = event.target as HTMLInputElement;
+      if (target) {
+        this.$emit('update:modelValue', target.value);
+      }
+    },
+  },
 });
 </script>
 
 <style scoped>
 .search-bar {
-  width: 60%;
+  width: 100px;
   padding: 15px;
-  margin-bottom: 25px;
+  margin: 25px;
   font-size: 1.2rem;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 12px;
+}
+
+@media (max-width: 480px) {
+  .search-bar {
+    padding: 4px;
+    margin: 20px auto;
+    border-radius: 10px;
+  }
 }
 </style>

@@ -1,7 +1,12 @@
 <template>
   <ul class="problem-list">
-    <li v-for="problem in problems" :key="problem.id">
-      <span :class="problem.difficulty" @click="$emit('selectProblem', problem)">
+    <li
+      v-for="problem in problems"
+      :key="problem.id"
+      :class="problem.difficulty"
+      @click="$emit('selectProblem', problem)"
+    >
+      <span>
         {{ problem.id }}. {{ problem.title }}
       </span>
       <span v-if="problem.difficulty" class="difficulty">{{ problem.difficulty }}</span>
@@ -32,73 +37,108 @@ export default defineComponent({
 </script>
 
 <style scoped>
+/* 問題列表樣式 */
 .problem-list {
   list-style: none;
+  width: 70%;
   padding: 0;
-  margin: 0;
+  margin: 1px auto; /* 垂直置中 上下增加間距 */
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background-color: #fafafa;
 }
 
+/* 單個列表項樣式 */
 .problem-list li {
-  padding: 15px;
-  border-bottom: 1px solid #ccc;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  background-color: #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
+/* 最後一個列表項不需要底部邊框 */
+.problem-list li:last-child {
+  border-bottom: none;
+}
+
+/* 🖱️ Hover 效果：放大、陰影、背景色變化 */
 .problem-list li:hover {
-  background-color: #e8e8e8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #f4f4f4;
 }
 
-/* 難度顏色 */
+/* 難度標籤的顏色和字型樣式 */
 .easy {
-  color: green;
+  color: #27ae60;
+  font-weight: bold;
 }
 
 .medium {
-  color: orange;
+  color: #e67e22;
+  font-weight: bold;
 }
 
 .hard {
-  color: red;
+  color: #c0392b;
+  font-weight: bold;
 }
 
-/* 顯示難度的文字樣式 */
+/* 難度文字樣式 */
 .difficulty {
-  margin-left: 10px;
+  margin-left: 12px;
+  color: black;
   font-style: italic;
   font-size: 0.9rem;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  opacity: 0.8;
 }
 
-/* RWD：針對平板和小螢幕進行優化 */
+/* 點擊效果 */
+.problem-list li:active {
+  transform: translateY(0);
+  box-shadow: none;
+  background-color: #ececec;
+}
+
+/* 🖱️ Hover 時難度標籤的細微動畫效果 */
+.problem-list li:hover .difficulty {
+  transform: scale(1.02);
+  opacity: 1;
+}
+
+/* 🔄 RWD：針對平板裝置的調整 */
 @media (max-width: 768px) {
   .problem-list li {
-    padding: 12px;
+    padding: 16px;
     font-size: 1rem;
-    flex-direction: column;
-    align-items: flex-start;
   }
 
   .difficulty {
-    margin-top: 5px;
+    margin-top: 6px;
     font-size: 0.85rem;
   }
 }
 
-/* RWD：針對手機或更小的裝置進行優化 */
+/* 📱 RWD：針對手機裝置的調整 */
 @media (max-width: 480px) {
+  .problem-list{
+    width: 97%;
+  }
   .problem-list li {
-    padding: 10px;
-    font-size: 0.9rem;
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 14px;
+    font-size: 0.95rem;
   }
 
   .difficulty {
-    margin-top: 3px;
+    margin-top: 4px;
     font-size: 0.8rem;
   }
 }
