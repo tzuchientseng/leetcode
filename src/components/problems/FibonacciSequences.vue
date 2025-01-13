@@ -4,17 +4,16 @@
     <button class="close-btn" @click="$emit('close')">&times;</button>
 
     <!-- 題目標題 -->
-    <h2>1.Two Sum (easy)</h2>
-    <a href="https://leetcode.com/problems/two-sum/description/" target="_blank">
-      https://leetcode.com/problems/two-sum/description/
-    </a>
+    <h2>Fibonacci Sequences</h2>
 
     <!-- 題目敘述 -->
     <p>
       <strong>問題:</strong>
-      給定一個整數陣列 nums 和一個目標值 target，
-      請找出並返回兩個數字，使它們的和等於目標值。
+      費氏數列是一個數列，其中每個數字都是前兩個數字的和。
+      數列的起始值通常為 0 和 1，因此費氏數列的前幾個數字為：
+      0, 1, 1, 2, 3, 5, 8, 13, 21, ...。
     </p>
+    <p>撰寫一個函式，接收一個整數 n，並返回費氏數列中第 n 個數字。</p>
 
     <!-- 我的解答 -->
     <h3>-- 我的解答 --</h3>
@@ -39,70 +38,10 @@ onMounted(() => {
 });
 
 const codeString = ref(`
-/*
-  Method 1: Brute Force
-  Time complexity o(n(n-1)/2) == o(n^2)
-  Space complexity o(1)
-*/
-const twoSumBruteForce = (nums: number[], target: number): number[] => {
- for (let i = 0; i < nums.length; i++) {
-   for (let j = i + 1; j < nums.length; j++) {
-    let sum = nums[i] + nums[j];
-    if (target === sum) return [i, j];
-   }
- }
-};
-/*
-  Method 2: HashMap
-  Time complexity o(n)
-  Space complexity o(n)
-*/
-const twoSumHashMap = (nums: number[], target: number): number[] => {
-  const recordMap = new Map<number, number>();
-  for (let i = 0; i < nums.length; i++) {
-    const complement: number = target - nums[i];
-    if (recordMap.has(complement)) {
-      return [recordMap.get(complement), i];
-    }
-    recordMap.set(nums[i], i);
-    // console.log({recordMap})
-  }
-}
-
-/*
-  Method 3: Functional Programming (Reduce)
-  Time complexity o(n)
-  Space complexity o(n)
-*/
-const twoSumReduce = (nums: number[], target: number): number[] => {
-  // array.reduce((accumulator, currentValue(key), currentIndex?(value), array?) => { ... }, initialValue);
-  const result = nums.reduce(
-    (acc: { map: Map<number, number>, found: boolean, indices: number[] }, num: number, index: number) => {
-      if (acc.found) return acc; // 若找到則停止
-      const complement: number = target - num;
-
-      if (acc.map.has(complement)) {
-        return {
-          ...acc,
-          found: true,
-          indices: [acc.map.get(complement)!, index], // 使用 ! 表示非空斷言 一定不是 null 或 undefined
-        };
-      }
-      return {
-        ...acc,
-        map: acc.map.set(num, index),
-      };
-    },
-    { map: new Map<number, number>(), found: false, indices: [] }
-  );
-  return result.indices;
-};
 `);
 
 const testCodeString = ref(`
-console.log(twoSumBruteForce([2, 7, 11, 15], 9)); // [0, 1]
-console.log(twoSumHashMap([3, 2, 4], 6)); // [1, 2]
-console.log(twoSumReduce([3, 3], 6)); // [0, 1]`);
+`);
 </script>
 
 <style scoped>

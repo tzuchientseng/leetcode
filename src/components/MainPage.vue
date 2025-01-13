@@ -9,11 +9,13 @@
     <ProblemList :problems="filteredProblems" @selectProblem="selectProblem" />
 
     <!-- 動態載入題目詳情 -->
-    <component
-      :is="selectedProblemComponent"
-      v-if="selectedProblemComponent"
-      @close="closeDetail"
-    />
+    <transition name="popup">
+      <component
+        :is="selectedProblemComponent"
+        v-if="selectedProblemComponent"
+        @close="closeDetail"
+      />
+    </transition>
   </div>
 </template>
 
@@ -23,6 +25,7 @@ import { defineAsyncComponent } from 'vue';
 
 // 引入題目
 const TwoSum = defineAsyncComponent(() => import('./problems/TwoSum.vue'));
+const FibonacciSequences = defineAsyncComponent(() => import('./problems/FibonacciSequences.vue'));
 
 // 其他元件
 import SearchBar from './SearchBar.vue';
@@ -32,7 +35,7 @@ import ProblemList from './ProblemList.vue';
 interface Problem {
   id: number;
   title: string;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: 'easy' | 'medium' | 'hard' | 'other';
   component?: any;
 }
 
@@ -43,8 +46,19 @@ export default defineComponent({
     // 題目清單
     const problems = ref<Problem[]>([
       {
+        id: 0,
+        title: 'Euclidean Algorithm',
+        difficulty: 'other',
+        // component: Euclidean,
+      },      {
         id: 1,
-        title: 'Two Sum',
+        title: 'Fibonacci Sequences',
+        difficulty: 'other',
+        component: FibonacciSequences,
+      },      
+      {
+        id: 2,
+        title: '1_Two Sum',
         difficulty: 'easy',
         component: TwoSum,
       },
@@ -106,6 +120,24 @@ export default defineComponent({
 h1 {
   font-size: 2rem;
   text-align: center;
+}
+
+/* 過渡效果：由中間向外彈開 */
+.popup-enter-active,
+.popup-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.popup-enter-from,
+.popup-leave-to {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.popup-enter-to,
+.popup-leave-from {
+  transform: scale(1);
+  opacity: 1;
 }
 
 /* 手機版的優化 */
