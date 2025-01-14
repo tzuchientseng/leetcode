@@ -24,7 +24,7 @@
 
     <!-- 測試用例 -->
     <h3>-- 測試用例 --</h3>
-    <pre class="code-block">
+    <pre class="test-block">
       <code class="language-javascript">{{ testCodeString }}</code>
     </pre>
   </div>
@@ -209,6 +209,40 @@ a:active {
 
 .code-block::-webkit-scrollbar-thumb:hover {
   background: #ffcc00; /* 滑鼠懸停時變亮 */
+}
+
+.test-block {
+  border-radius: 10px;
+  white-space: pre-wrap;
+  font-family: 'Courier New', monospace;
+  /* font-family: 'Fira Code', 'Courier New', monospace; */
+  max-height: 100px; /* 限制程式碼區塊高度 */
+  color: #f8f8f2;
+  font-size: 14px;
+  overflow-x: auto; /* 水平滾軸 */
+  overflow-y: auto; /* 垂直滾軸 */
+  border: 1px solid #444;
+  text-align: left; /* 確保程式碼區塊靠左對齊 */
+}
+
+/* 美化化滾動條樣式 */
+.test-block::-webkit-scrollbar {
+  width: 10px;
+}
+
+.test-block::-webkit-scrollbar-track {
+  background: #1e1e2f;
+  border-radius: 10px;
+}
+
+.test-block::-webkit-scrollbar-thumb {
+  background: #1a6cb9;
+  border-radius: 10px;
+  border: 2px solid #1e1e2f;
+}
+
+.test-block::-webkit-scrollbar-thumb:hover {
+  background: #11d3e0;
 }
 
 pre {

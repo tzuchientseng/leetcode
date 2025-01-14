@@ -33,7 +33,7 @@
 
     <!-- 測試用例 -->
     <h3>-- 測試用例 --</h3>
-    <pre class="code-block">
+    <pre class="test-block">
       <code class="language-javascript">{{ testCodeString }}</code>
     </pre>
   </div>
@@ -57,16 +57,16 @@ const codeString = `
 /*
   Method 1: Functional Programming => Tail Recursion
   Time complexity: O(n)
-  Space complexity: O(1) (理論上) 需要尾遞迴優化 (Tail Call Optimization, TCO)
+  Space complexity: O(1) (需要複寫框架) 需要尾遞迴優化 (Tail Call Optimization, TCO)
   - 在 Scala、Haskell 支援 TCO，因此空間複雜度是 O(1)。
   - 在 JavaScript、Python、Java 中，因為不支援 TCO，實際空間複雜度是 O(n)。
   - C/C++ 需要啟用特定的編譯器選項才支援 TCO。
 
   -- Process --
   getFibonacciTailRec(4, 0, 1)
-  -> getFibonacciTailRec(3, 1, 1)
-  -> getFibonacciTailRec(2, 1, 2)
-  -> getFibonacciTailRec(1, 2, 3)
+  -> getFibonacciTailRec(3, 1, 1) // 覆寫框架
+  -> getFibonacciTailRec(2, 1, 2) // 覆寫框架
+  -> getFibonacciTailRec(1, 2, 3) // 覆寫框架
   -> getFibonacciTailRec(0, 3, 5) // return 3
 */
 // 
@@ -261,6 +261,40 @@ a:active {
 
 .code-block::-webkit-scrollbar-thumb:hover {
   background: #ffcc00; /* 滑鼠懸停時變亮 */
+}
+
+.test-block {
+  border-radius: 10px;
+  white-space: pre-wrap;
+  font-family: 'Courier New', monospace;
+  /* font-family: 'Fira Code', 'Courier New', monospace; */
+  max-height: 100px; /* 限制程式碼區塊高度 */
+  color: #f8f8f2;
+  font-size: 14px;
+  overflow-x: auto; /* 水平滾軸 */
+  overflow-y: auto; /* 垂直滾軸 */
+  border: 1px solid #444;
+  text-align: left; /* 確保程式碼區塊靠左對齊 */
+}
+
+/* 美化化滾動條樣式 */
+.test-block::-webkit-scrollbar {
+  width: 10px;
+}
+
+.test-block::-webkit-scrollbar-track {
+  background: #1e1e2f;
+  border-radius: 10px;
+}
+
+.test-block::-webkit-scrollbar-thumb {
+  background: #1a6cb9;
+  border-radius: 10px;
+  border: 2px solid #1e1e2f;
+}
+
+.test-block::-webkit-scrollbar-thumb:hover {
+  background: #11d3e0;
 }
 
 pre {
