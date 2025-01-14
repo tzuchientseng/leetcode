@@ -9,12 +9,17 @@
     <ProblemList :problems="filteredProblems" @selectProblem="selectProblem" />
 
     <!-- 動態載入題目詳情 -->
-    <transition name="popup">
-      <component
-        :is="selectedProblemComponent"
-        v-if="selectedProblemComponent"
-        @close="closeDetail"
-      />
+    <transition name="popup" mode="out-in">
+      <template v-if="isLoading">
+        <LoadingSpinner />
+      </template>
+      <template v-else>
+        <component
+          :is="selectedProblemComponent"
+          v-if="selectedProblemComponent"
+          @close="closeDetail"
+        />
+      </template>
     </transition>
   </div>
 </template>
@@ -23,15 +28,7 @@
 import { defineComponent, ref, computed } from 'vue';
 import { defineAsyncComponent } from 'vue';
 
-// 引入題目
-const TwoSum = defineAsyncComponent(() => import('./problems/TwoSum.vue'));
-const FibonacciSequences = defineAsyncComponent(() => import('./problems/FibonacciSequences.vue'));
-
-// 其他元件
-import SearchBar from './SearchBar.vue';
-import ProblemList from './ProblemList.vue';
-
-// 定義 Problem 類型
+// 定義 Problem 介面
 interface Problem {
   id: number;
   title: string;
@@ -39,51 +36,47 @@ interface Problem {
   component?: any;
 }
 
+// 動態載入題目元件
+const TwoSum = defineAsyncComponent(() => import('./problems/TwoSum.vue'));
+const FibonacciSequences = defineAsyncComponent(() => import('./problems/FibonacciSequences.vue'));
+const Euclidean = defineAsyncComponent(() => import('./problems/EuclideanAlgorithm.vue'));
+
+// 其他元件
+import SearchBar from './SearchBar.vue';
+import ProblemList from './ProblemList.vue';
+import LoadingSpinner from './LoadingSpinner.vue';
+
 export default defineComponent({
   name: 'MainPage',
-  components: { SearchBar, ProblemList },
+  components: { SearchBar, ProblemList, LoadingSpinner },
   setup() {
     // 題目清單
     const problems = ref<Problem[]>([
-      {
-        id: 0,
-        title: 'Euclidean Algorithm',
-        difficulty: 'other',
-        // component: Euclidean,
-      },      {
-        id: 1,
-        title: 'Fibonacci Sequences',
-        difficulty: 'other',
-        component: FibonacciSequences,
-      },      
-      {
-        id: 2,
-        title: '1_Two Sum',
-        difficulty: 'easy',
-        component: TwoSum,
-      },
+      { id: 1, title: 'Euclidean Algorithm', difficulty: 'other', component:  Euclidean},
+      { id: 2, title: 'Fibonacci Sequences', difficulty: 'other', component: FibonacciSequences },
+      { id: 3, title: '1_Two Sum', difficulty: 'easy', component: TwoSum },
     ]);
 
     // 搜尋關鍵字
     const searchQuery = ref('');
 
-    // 依據搜尋關鍵字篩選題目
-    const filteredProblems = computed(() => {
-      return problems.value.filter((problem) =>
-        problem.title.toLowerCase().includes(searchQuery.value.toLowerCase())
-      );
-    });
-
     // 選中的題目
     const selectedProblem = ref<Problem | null>(null);
-
-    // 目前顯示的題目元件
     const selectedProblemComponent = ref<any>(null);
+
+    // 控制 Loading 狀態
+    const isLoading = ref(false);
 
     // 點擊某個題目時
     const selectProblem = (problem: Problem) => {
+      isLoading.value = true;
       selectedProblem.value = problem;
-      selectedProblemComponent.value = problem.component;
+
+      // 模擬載入元件的延遲
+      setTimeout(() => {
+        selectedProblemComponent.value = problem.component;
+        isLoading.value = false;
+      }, 1000);
     };
 
     // 關閉詳情
@@ -94,9 +87,14 @@ export default defineComponent({
 
     return {
       searchQuery,
-      filteredProblems,
+      filteredProblems: computed(() =>
+        problems.value.filter((problem) =>
+          problem.title.toLowerCase().includes(searchQuery.value.toLowerCase())
+        )
+      ),
       selectedProblem,
       selectedProblemComponent,
+      isLoading,
       selectProblem,
       closeDetail,
     };
