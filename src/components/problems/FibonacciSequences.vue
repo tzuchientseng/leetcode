@@ -5,15 +5,25 @@
 
     <!-- 題目標題 -->
     <h2>Fibonacci Sequences</h2>
+    <a href="https://en.wikipedia.org/wiki/Fibonacci_sequence" target="_blank">
+      https://en.wikipedia.org/wiki/Fibonacci_sequence
+    </a>
 
     <!-- 題目敘述 -->
     <p>
       <strong>問題:</strong>
       費氏數列是一個數列，其中每個數字都是前兩個數字的和。
-      數列的起始值通常為 0 和 1，因此費氏數列的前幾個數字為：
-      0, 1, 1, 2, 3, 5, 8, 13, 21, ...。
     </p>
-    <p>撰寫一個函式，接收一個整數 n，並返回費氏數列中第 n 個數字。</p>
+    <div v-if="showMore">
+      <p>
+        數列的起始值通常為 0 和 1，因此費氏數列的前幾個數字為：
+        0, 1, 1, 2, 3, 5, 8, 13, 21, ...。
+      </p>
+      <p>撰寫一個函式，接收一個整數 n，並返回費氏數列中第 n 個數字。</p>
+    </div>
+    <button id="toggleShowMoreButton" @click="toggleShowMore">
+      {{ showMore ? '(Hide)' : 'Click to Show More ↓' }}
+    </button>
 
     <!-- 我的解答 -->
     <h3>-- 我的解答 --</h3>
@@ -37,11 +47,115 @@ onMounted(() => {
   Prism.highlightAll(); // 啟用語法高亮
 });
 
-const codeString = ref(`
-`);
+const showMore = ref(false);
 
-const testCodeString = ref(`
-`);
+const toggleShowMore = () => {
+  showMore.value = !showMore.value;
+};
+
+const codeString = `
+/*
+  Method 1: Functional Programming => Tail Recursion
+  Time complexity: O(n)
+  Space complexity: O(1) (理論上) 需要尾遞迴優化 (Tail Call Optimization, TCO)
+  - 在 Scala、Haskell 支援 TCO，因此空間複雜度是 O(1)。
+  - 在 JavaScript、Python、Java 中，因為不支援 TCO，實際空間複雜度是 O(n)。
+  - C/C++ 需要啟用特定的編譯器選項才支援 TCO。
+
+  -- Process --
+  getFibonacciTailRec(4, 0, 1)
+  -> getFibonacciTailRec(3, 1, 1)
+  -> getFibonacciTailRec(2, 1, 2)
+  -> getFibonacciTailRec(1, 2, 3)
+  -> getFibonacciTailRec(0, 3, 5) // return 3
+*/
+// 
+const getFibonacciTailRec = (num: number, a = 0, b = 1): number =>
+  num === 0 ? a : getFibonacciTailRec(num - 1, b, a + b);
+
+/*
+  Method 1.2: Functional Programing => Array#reduce + recursion (過程像是 Method4: memoization bottom-up)
+  Time complexity O(n) 
+  Space complexity O(n)
+*/
+const getFibonacciFP = (num: number): number =>
+  num <= 1
+    ? num
+    : Array.from({ length: num - 1 }).reduce(([prev, curr]) => [curr, prev + curr], [0, 1])[1];
+
+/*
+  Method 2: Recursive
+  Time complexity O(2^n) 
+  Space complexity O(n)
+*/
+const getFibonacciRecursive = (num: number): number => {
+    if (num === 0 || num === 1) return num; // 不要寫成 if (num === 0 || 1) return num;
+    return getFibonacciRecursive(num - 1) + getFibonacciRecursive(num - 2);
+};
+
+/*
+  Method 3: Iterative 
+  Time complexity O(n) 
+  Space complexity O(1)
+*/
+const getFibonacciIterative = (num: number): number => {
+  if (num <= 1) return num;
+
+  let previous = 0, current = 1;
+  let next = 0;
+
+  for (let i = 2; i <= num; i++) {
+    next = previous + current;
+    previous = current;
+    current = next;
+  }
+
+  return current;
+
+/*
+  Method 4: Memoization (Dynamic Programming: Bottom-Up)
+  Time complexity O(n)
+  Space complexity O(n)
+*/
+const getFibonacciBottomUp = (num: number): number => {
+  if (num <= 1) return num;
+
+  const dp: number[] = [0, 1];
+
+  for (let i = 2; i <= num; i++) {
+    dp[i] = dp[i - 1] + dp[i - 2];
+  }
+
+  return dp[num];
+};
+
+/*
+  Method 5: Memoization (Dynamic Programming: Top-Down)
+  Time complexity O(n)
+  Space complexity O(n)
+*/
+const getFibonacciTopDown = (num: number): number => {
+  // const memo: number[] = Array.from({ length: num + 1 }, () => -1);
+  const memo: number[] = Array(num + 1).fill(-1);
+
+  const helper = (n: number): number => {
+    if (n <= 1) return n;
+    if (memo[n] !== -1) return memo[n];
+    memo[n] = helper(n - 1) + helper(n - 2);
+    return memo[n];
+  };
+
+  return helper(num);
+};
+`;
+
+const testCodeString = `
+console.log(getFibonacciTailRec(4)); // Output: 3
+console.log(getFibonacciFP(4)); // Output: 3
+console.log(getFibonacciRecursive(4)); // Output: 3
+console.log(getFibonacciIterative(4)); // Output: 3
+console.log(getFibonacciBottomUp(4)); // Output: 3
+console.log(getFibonacciTopDown(4)); // Output: 3`;
 </script>
 
 <style scoped>
@@ -160,6 +274,26 @@ button {
 
 .problem-detail button:focus {
   outline: 2px solid #ff9900;
+}
+
+/* Show More Button Style */
+#toggleShowMoreButton {
+  background: rgb(65, 64, 64);
+  color: black;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  outline: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#toggleShowMoreButton:hover {
+  background-color: #504f4c;
+  transform: scale(1.05);
+}
+
+#toggleShowMoreButton:active {
+  transform: scale(0.95);
 }
 
 @media (max-width: 600px) {

@@ -4,7 +4,7 @@
     <button class="close-btn" @click="$emit('close')">&times;</button>
 
     <!-- 題目標題 -->
-    <h2>1.Two Sum (easy)</h2>
+    <h2>1__Two Sum (easy)</h2>
     <a href="https://leetcode.com/problems/two-sum/description/" target="_blank">
       https://leetcode.com/problems/two-sum/description/
     </a>
@@ -52,6 +52,7 @@ const twoSumBruteForce = (nums: number[], target: number): number[] => {
    }
  }
 };
+
 /*
   Method 2: HashMap
   Time complexity o(n)
