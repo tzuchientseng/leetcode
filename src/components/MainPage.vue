@@ -40,6 +40,7 @@ interface Problem {
 const TwoSum = defineAsyncComponent(() => import('./problems/TwoSum.vue'));
 const FibonacciSequences = defineAsyncComponent(() => import('./problems/FibonacciSequences.vue'));
 const Euclidean = defineAsyncComponent(() => import('./problems/EuclideanAlgorithm.vue'));
+const AddTwoNumbers = defineAsyncComponent(() => import('./problems/AddTwoNumbers.vue'));
 
 // 其他元件
 import SearchBar from './SearchBar.vue';
@@ -55,6 +56,7 @@ export default defineComponent({
       { id: 1, title: 'Euclidean Algorithm', difficulty: 'other', component:  Euclidean},
       { id: 2, title: 'Fibonacci Sequences', difficulty: 'other', component: FibonacciSequences },
       { id: 3, title: '1_Two Sum', difficulty: 'easy', component: TwoSum },
+      { id: 4, title: '2_Add Two Numbers (Linked-Lists)', difficulty: 'medium', component: AddTwoNumbers},
     ]);
 
     // 搜尋關鍵字
@@ -108,9 +110,9 @@ export default defineComponent({
   height: 70vh;
   width: 90vw;
   font-family: Arial, sans-serif;
-  background-color: gray;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  /* background-color: gray; */
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); */
+  /* border-radius: 12px; */
   margin: 0 auto;
 }
 

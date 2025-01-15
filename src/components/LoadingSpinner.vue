@@ -29,7 +29,7 @@ export default {
   width: 50px;
   height: 50px;
   border: 5px solid gray;
-  border-top: 5px solid #fff;
+  border-top: 5px solid #2B2B2B;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -37,7 +37,7 @@ export default {
 p {
   margin-top: 15px;
   font-size: 1.5rem;
-  color: gray;
+  color:#2B2B2B;
 }
 
 /* 加入動畫效果 */

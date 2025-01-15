@@ -4,22 +4,18 @@
     <button class="close-btn" @click="$emit('close')">&times;</button>
 
     <!-- 題目標題 -->
-    <h2>Fibonacci Sequences</h2>
-    <a href="https://en.wikipedia.org/wiki/Fibonacci_sequence" target="_blank">
-      https://en.wikipedia.org/wiki/Fibonacci_sequence
+    <h2>2_Add Two Numbers (medium)</h2>
+    <a href="https://leetcode.com/problems/add-two-numbers/description/" target="_blank">
+      https://leetcode.com/problems/add-two-numbers/description/
     </a>
-
-    <!-- 題目敘述 -->
     <p>
       <strong>問題:</strong>
-      費氏數列是一個數列，其中每個數字都是前兩個數字的和。
     </p>
     <div v-if="showMore">
       <p>
-        數列的起始值通常為 0 和 1，因此費氏數列的前幾個數字為：
-        0, 1, 1, 2, 3, 5, 8, 13, 21, ...。(數字之間的比例會慢慢趨近於黃金比例（約 1.618）)
+        --- 
       </p>
-      <p>撰寫一個函式，接收一個整數 n，並返回費氏數列中第 n 個數字。</p>
+      亦即: 
     </div>
     <button id="toggleShowMoreButton" @click="toggleShowMore">
       {{ showMore ? '(Hide)' : 'Click to Show More ↓' }}
@@ -55,107 +51,75 @@ const toggleShowMore = () => {
 
 const codeString = `
 /*
-  Method 1: Functional Programming => Tail Recursion
-  Time complexity: O(n)
-  Space complexity: O(1) (需要複寫框架) 需要尾遞迴優化 (Tail Call Optimization, TCO)
-  - 在 Scala、Haskell 支援 TCO，因此空間複雜度是 O(1)。
-  - 在 JavaScript、Python、Java 中，因為不支援 TCO，實際空間複雜度是 O(n)。
-  - C/C++ 需要啟用特定的編譯器選項才支援 TCO。
-
-  -- Process --
-  getFibonacciTailRec(4, 0, 1)
-  -> getFibonacciTailRec(3, 1, 1) // 覆寫框架
-  -> getFibonacciTailRec(2, 1, 2) // 覆寫框架
-  -> getFibonacciTailRec(1, 2, 3) // 覆寫框架
-  -> getFibonacciTailRec(0, 3, 5) // return 3
+  Method 1
+  Time complexity: O()
+  Space complexity: O()
 */
-// 
-const getFibonacciTailRec = (num: number, a = 0, b = 1): number =>
-  num === 0 ? a : getFibonacciTailRec(num - 1, b, a + b);
+class ListNode {
+    val: number;
+    next: ListNode | null;
 
-/*
-  Method 1.2: Functional Programing => Array#reduce + recursion (過程像是 Method4: memoization bottom-up)
-  Time complexity O(n) 
-  Space complexity O(n)
-*/
-const getFibonacciFP = (num: number): number =>
-  num <= 1
-    ? num
-    : Array.from({ length: num - 1 }).reduce(([prev, curr]) => [curr, prev + curr], [0, 1])[1];
+    constructor(val: number, next: ListNode | null = null) {
+        this.val = val;
+        this.next = next;
+    }
+}
 
-/*
-  Method 2: Recursive
-  Time complexity O(2^n) 
-  Space complexity O(n)
-*/
-const getFibonacciRecursive = (num: number): number => {
-    if (num === 0 || num === 1) return num; // 不要寫成 if (num === 0 || 1) return num;
-    return getFibonacciRecursive(num - 1) + getFibonacciRecursive(num - 2);
-};
+class Solution {
+    addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
+        let dummyHead = new ListNode(0);
+        let p: ListNode | null = l1, q: ListNode | null = l2, curr: ListNode = dummyHead;
+        let carry: number = 0;
 
-/*
-  Method 3: Iterative 
-  Time complexity O(n) 
-  Space complexity O(1)
-*/
-const getFibonacciIterative = (num: number): number => {
-  if (num <= 1) return num;
+        while (p !== null || q !== null) {
+            let x: number = (p !== null) ? p.val : 0;
+            let y: number = (q !== null) ? q.val : 0;
+            let sum: number = carry + x + y;
+            carry = Math.floor(sum / 10);
+            curr.next = new ListNode(sum % 10);
+            curr = curr.next;
 
-  let previous = 0, current = 1;
-  let next = 0;
+            if (p !== null) p = p.next;
+            if (q !== null) q = q.next;
+        }
 
-  for (let i = 2; i <= num; i++) {
-    next = previous + current;
-    previous = current;
-    current = next;
-  }
+        if (carry > 0) {
+            curr.next = new ListNode(carry);
+        }
 
-  return current;
+        return dummyHead.next;
+    }
+}
+class Listnode {
+    val: number;
+    next: Listnode | null;
 
-/*
-  Method 4: Memoization (Dynamic Programming: Bottom-Up)
-  Time complexity O(n)
-  Space complexity O(n)
-*/
-const getFibonacciBottomUp = (num: number): number => {
-  if (num <= 1) return num;
+    constructor(val: number, next: Listnode | null = null) {
+        this.val = val;
+        this.next = next;
+    }
 
-  const dp: number[] = [0, 1];
+    const printListNode = (ListNode: Listnode) => {
+        while(ListNode.val !== null) {
+            console.log(ListNode.val);
+            ListNode.next;
+            console.log(ListNode.val);
+        }
 
-  for (let i = 2; i <= num; i++) {
-    dp[i] = dp[i - 1] + dp[i - 2];
-  }
+    }
+ }
 
-  return dp[num];
-};
 
-/*
-  Method 5: Memoization (Dynamic Programming: Top-Down)
-  Time complexity O(n)
-  Space complexity O(n)
-*/
-const getFibonacciTopDown = (num: number): number => {
-  // const memo: number[] = Array.from({ length: num + 1 }, () => -1);
-  const memo: number[] = Array(num + 1).fill(-1);
+const dummyHead = new Listnode(0);
+dummyHead.printListNode();
 
-  const helper = (n: number): number => {
-    if (n <= 1) return n;
-    if (memo[n] !== -1) return memo[n];
-    memo[n] = helper(n - 1) + helper(n - 2);
-    return memo[n];
-  };
 
-  return helper(num);
-};
+
+
 `;
 
 const testCodeString = `
-console.log(getFibonacciTailRec(4)); // Output: 3
-console.log(getFibonacciFP(4)); // Output: 3
-console.log(getFibonacciRecursive(4)); // Output: 3
-console.log(getFibonacciIterative(4)); // Output: 3
-console.log(getFibonacciBottomUp(4)); // Output: 3
-console.log(getFibonacciTopDown(4)); // Output: 3`;
+console.log(); // Output: --`;
 </script>
 
 <style scoped>
@@ -179,7 +143,7 @@ console.log(getFibonacciTopDown(4)); // Output: 3`;
 h2 {
   font-size: 20px;
   margin-bottom: 0px;
-  color: green;
+  color: #e67e22;
 }
 
 p {
