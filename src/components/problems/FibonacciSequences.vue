@@ -6,7 +6,7 @@
     <!-- 題目標題 -->
     <h2>Fibonacci Sequences</h2>
     <a href="https://en.wikipedia.org/wiki/Fibonacci_sequence" target="_blank">
-      https://en.wikipedia.org/wiki/Fibonacci_sequence
+      wiki - Fibonacci_sequence
     </a>
 
     <!-- 題目敘述 -->

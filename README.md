@@ -1,3 +1,8 @@
+# VS code Extensions
+
+- Vetur 是預設給 Vue2 的 IDE 插件。
+- Volar 是官方針對 Vue3 + TypeScript 推薦使用的插件。
+
 # leetcode
 
 `npm install gh-pages --save-dev`

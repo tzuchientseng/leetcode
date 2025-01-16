@@ -6,7 +6,7 @@
     <!-- 題目標題 -->
     <h2>1__Two Sum (easy)</h2>
     <a href="https://leetcode.com/problems/two-sum/description/" target="_blank">
-      https://leetcode.com/problems/two-sum/description/
+      leetcode_1
     </a>
 
     <!-- 題目敘述 -->

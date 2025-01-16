@@ -6,7 +6,7 @@
     <!-- 題目標題 -->
     <h2>Euclidean Algorithm</h2>
     <a href="https://en.wikipedia.org/wiki/Euclidean_algorithm" target="_blank">
-      https://en.wikipedia.org/wiki/Euclidean_algorithm
+      wiki - Euclidean_algorithm
     </a>
     <p>
       <strong>問題:</strong>

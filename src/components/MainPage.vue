@@ -41,6 +41,7 @@ const TwoSum = defineAsyncComponent(() => import('./problems/TwoSum.vue'));
 const FibonacciSequences = defineAsyncComponent(() => import('./problems/FibonacciSequences.vue'));
 const Euclidean = defineAsyncComponent(() => import('./problems/EuclideanAlgorithm.vue'));
 const AddTwoNumbers = defineAsyncComponent(() => import('./problems/AddTwoNumbers.vue'));
+const BFSAndDFS = defineAsyncComponent(() => import('./problems/BFSAndDFS.vue'))
 
 // 其他元件
 import SearchBar from './SearchBar.vue';
@@ -55,8 +56,9 @@ export default defineComponent({
     const problems = ref<Problem[]>([
       { id: 1, title: 'Euclidean Algorithm', difficulty: 'other', component:  Euclidean},
       { id: 2, title: 'Fibonacci Sequences', difficulty: 'other', component: FibonacciSequences },
-      { id: 3, title: '1_Two Sum', difficulty: 'easy', component: TwoSum },
-      { id: 4, title: '2_Add Two Numbers (Linked-Lists)', difficulty: 'medium', component: AddTwoNumbers},
+      { id: 3, title: 'BFS & DFS', difficulty: 'other', component: BFSAndDFS },
+      { id: 4, title: '1_Two Sum', difficulty: 'easy', component: TwoSum },
+      { id: 5, title: '2_Add Two Numbers (Linked-Lists)', difficulty: 'medium', component: AddTwoNumbers},
     ]);
 
     // 搜尋關鍵字

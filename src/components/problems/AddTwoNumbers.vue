@@ -6,16 +6,19 @@
     <!-- 題目標題 -->
     <h2>2_Add Two Numbers (medium)</h2>
     <a href="https://leetcode.com/problems/add-two-numbers/description/" target="_blank">
-      https://leetcode.com/problems/add-two-numbers/description/
+      leetcode_2
     </a>
     <p>
       <strong>問題:</strong>
+      兩個鏈結串列 (Linked List) 的節點數值和
     </p>
     <div v-if="showMore">
       <p>
-        --- 
+        給定兩個非空的鏈結串列，分別代表兩個非負整數。這些數字以 逆序 (Reverse Order) 的方式儲存，每個節點包含一個數位 (Single Digit)。我們的任務是將這兩個數字相加，並以相同的鏈結串列形式返回它們的總和。
+        可以假設：
+        這兩個數字 不包含前置零 (除了數字 0 本身)。
+        輸入的鏈結串列中，節點的數值範圍為 0 到 9。
       </p>
-      亦即: 
     </div>
     <button id="toggleShowMoreButton" @click="toggleShowMore">
       {{ showMore ? '(Hide)' : 'Click to Show More ↓' }}
@@ -51,75 +54,77 @@ const toggleShowMore = () => {
 
 const codeString = `
 /*
-  Method 1
-  Time complexity: O()
-  Space complexity: O()
+  Time complexity: O(n)
+  Space complexity: O(n)
 */
 class ListNode {
-    val: number;
-    next: ListNode | null;
+    public val: number;
+    public next: ListNode | null;
 
     constructor(val: number, next: ListNode | null = null) {
         this.val = val;
         this.next = next;
     }
-}
 
-class Solution {
-    addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
-        let dummyHead = new ListNode(0);
-        let p: ListNode | null = l1, q: ListNode | null = l2, curr: ListNode = dummyHead;
-        let carry: number = 0;
+    public static create(values: number[]): ListNode | null {
+        let dummy = new ListNode(0); // 虛擬頭節點
+        let current = dummy;
+        for (let val of values) {
+            current.next = new ListNode(val);
+            current = current.next;
+        }
+        return dummy.next; // 返回真正的頭節點
+    }
 
-        while (p !== null || q !== null) {
-            let x: number = (p !== null) ? p.val : 0;
-            let y: number = (q !== null) ? q.val : 0;
-            let sum: number = carry + x + y;
+    public static print(head: ListNode | null): void {
+        let current = head;
+        let result: number[] = [];
+        while (current !== null) {
+            result.push(current.val);
+            current = current.next;
+        }
+        console.log(result.join(" -> "));
+    }
+
+    public static addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
+        let dummy = new ListNode(0); // 虛擬頭節點
+        let current = dummy;
+        let carry = 0; // 進位數值
+
+        while (l1 !== null || l2 !== null || carry > 0) {
+            let sum = carry;
+
+            if (l1 !== null) {
+                sum += l1.val; 
+                l1 = l1.next;
+            }
+
+            if (l2 !== null) {
+                sum += l2.val;
+                l2 = l2.next;
+            }
+
             carry = Math.floor(sum / 10);
-            curr.next = new ListNode(sum % 10);
-            curr = curr.next;
-
-            if (p !== null) p = p.next;
-            if (q !== null) q = q.next;
+            current.next = new ListNode(sum % 10);
+            current = current.next;
         }
 
-        if (carry > 0) {
-            curr.next = new ListNode(carry);
-        }
-
-        return dummyHead.next;
+        return dummy.next;
     }
 }
-class Listnode {
-    val: number;
-    next: Listnode | null;
 
-    constructor(val: number, next: Listnode | null = null) {
-        this.val = val;
-        this.next = next;
-    }
+const l1 = ListNode.create([2, 3, 4]); // ListNode.print(l1); // 2 -> 3 -> 4 (432)
+const l2 = ListNode.create([5, 6, 4]); // ListNode.print(l2); // 5 -> 6 -> 4 (465)
 
-    const printListNode = (ListNode: Listnode) => {
-        while(ListNode.val !== null) {
-            console.log(ListNode.val);
-            ListNode.next;
-            console.log(ListNode.val);
-        }
-
-    }
- }
-
-
-const dummyHead = new Listnode(0);
-dummyHead.printListNode();
-
-
-
-
+const result = ListNode.addTwoNumber(l1, l2);
+ListNode.print(result); // 7 -> 9 -> 8 (897)
 `;
 
 const testCodeString = `
-console.log(); // Output: --`;
+const l1 = ListNode.create([2, 3, 4]); // ListNode.print(l1); // 2 -> 3 -> 4 (432)
+const l2 = ListNode.create([5, 6, 4]); // ListNode.print(l2); // 5 -> 6 -> 4 (465)
+const result = ListNode.addTwoNumber(l1, l2);
+ListNode.print(result); // Output: 7 -> 9 -> 8 (897)`;
 </script>
 
 <style scoped>
