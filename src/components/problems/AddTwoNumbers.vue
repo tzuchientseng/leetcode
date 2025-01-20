@@ -73,6 +73,13 @@ class ListNode {
             current.next = new ListNode(val);
             current = current.next;
         }
+          /* FP 寫法
+            values.map((val) => {
+            current.next = new ListNode(val);
+            current = current.next;
+          */
+        });
+  
         return dummy.next; // 返回真正的頭節點
     }
 
@@ -85,6 +92,16 @@ class ListNode {
         }
         console.log(result.join(" -> "));
     }
+
+      /* FP 寫法
+        public static printFunctional(head: ListNode | null): void {
+            const toArray = (node: ListNode | null, acc: number[] = []): number[] =>
+                node === null ? acc : toArray(node.next, [...acc, node.val]);
+
+            const result = toArray(head);
+            console.log(result.join(" -> "));
+        }   
+      */
 
     public static addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
         let dummy = new ListNode(0); // 虛擬頭節點
