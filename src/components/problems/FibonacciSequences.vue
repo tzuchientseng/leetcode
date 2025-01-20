@@ -70,8 +70,17 @@ const codeString = `
   -> getFibonacciTailRec(0, 3, 5) // return 3
 */
 // 
-const getFibonacciTailRec = (num: number, a = 0, b = 1): number =>
-  num === 0 ? a : getFibonacciTailRec(num - 1, b, a + b);
+
+const fib = (num: number, prev = 0, curr = 1): number => num === 0 ? prev : fib(num - 1, curr, prev + curr);
+console.log(
+  Array.from({ length: 10 })
+  .map((_, index) => fib(index))
+  .join(' ')
+  );
+
+// 以下測試寫法也可
+// console.log(Array.from({ length: 10 }, (_, index) => fib(index)).join(' ')); // 不換行印
+// Array.from({ length: 10 }, (_, index) => index).forEach(num => console.log(fib(num))); // 換行印
 
 /*
   Method 1.2: Functional Programing => Array#reduce + recursion (過程像是 Method4: memoization bottom-up)
@@ -279,7 +288,8 @@ a:active {
 
 /* 美化化滾動條樣式 */
 .test-block::-webkit-scrollbar {
-  width: 10px;
+  width: 9px;
+  height: 9px;
 }
 
 .test-block::-webkit-scrollbar-track {
@@ -347,6 +357,9 @@ button {
   .code-block {
     font-size: 12px;
     max-height: 300px; /* 限制程式碼區塊高度 */
+  }
+  .test-block {
+    font-size: 12px;
   }
 }
 </style>

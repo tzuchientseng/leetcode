@@ -83,9 +83,10 @@ const GCD = (dividend: number, divisor: number): number => {
  const gcdRecursive = (dividend: number, divisor: number): number => divisor === 0 ? dividend : gcdRecursive(divisor, dividend % divisor);
 
 /*
-  Mutiple GCD: Functional Programming => reduce()
-  Time complexity:
-  Space complexity:
+  Mutiple GCD: Functional Programming => Recursion + reduce()
+  Time complexity: O(nlog(m)) 
+  Space complexity: O(log(m)) 
+
 */
 const gcdRecursive = (dividend: number, divisor: number): number => divisor === 0 ? dividend : gcdRecursive(divisor, dividend % divisor);
 const gcdReduce  = (numbers: number[]): number => numbers.reduce((acc, cur) => gcdRecursive(acc, cur), numbers[0]);
@@ -259,7 +260,8 @@ a:active {
 
 /* 美化化滾動條樣式 */
 .test-block::-webkit-scrollbar {
-  width: 10px;
+  width: 9px;
+  height: 9px;
 }
 
 .test-block::-webkit-scrollbar-track {
@@ -327,6 +329,10 @@ button {
   .code-block {
     font-size: 12px;
     max-height: 300px; /* 限制程式碼區塊高度 */
+  }
+
+  .test-block {
+    font-size: 12px;
   }
 }
 </style>

@@ -227,7 +227,8 @@ a:active {
 
 /* 美化化滾動條樣式 */
 .test-block::-webkit-scrollbar {
-  width: 10px;
+  width: 9px;
+  height: 9px;
 }
 
 .test-block::-webkit-scrollbar-track {
@@ -276,5 +277,8 @@ button {
     font-size: 12px;
     max-height: 300px; /* 限制程式碼區塊高度 */
   }
+  .test-block {
+    font-size: 12px;
+  } 
 }
 </style>

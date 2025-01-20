@@ -2,7 +2,7 @@
   <div class="problem-detail">
     <!-- 關閉按鈕 -->
     <button class="close-btn" @click="$emit('close')">&times;</button>
-
+    
     <!-- 題目標題 -->
     <h2>BFS / DFS</h2>
     <a href="https://en.wikipedia.org/wiki/Breadth-first_search" target="_blank">
@@ -13,12 +13,12 @@
     </a>
     <p>
       <strong>問題:</strong>
-      兩個
+      Graph Traversal
     </p>
     <div v-if="showMore">
-      <p>
-        --
-      </p>
+      <p>根據節點圖，從節點 1 開始，以下面兩種走訪方式印出節點。</p>
+      <p>1. 廣度優先 (Breadth-First Search, BFS)</p>
+      <p>2.深度優先 (Depth-First Search, DFS)</p>
     </div>
     <button id="toggleShowMoreButton" @click="toggleShowMore">
       {{ showMore ? '(Hide)' : 'Click to Show More ↓' }}
@@ -134,66 +134,81 @@ async function fetchNeighbours(node: number): Promise<number[]> {
 }
 
 /*
-  Time complexity: O()
-  Space complexity: O()
+  Assuming the graph has V vertices and E edges:
+  Time complexity: O(V + E)
+  Space complexity: O(V)
 */
 
 // BFS 遍歷函數
-async function bfs(start) {
+const BFS = async (start: number) => {
     const queue = [start];
-    const visited = new Set();
+    const visited = new Set<number>();
     visited.add(start);
 
     while (queue.length > 0) {
         const currentNode = queue.shift();
-        console.log(currentNode);
+        if (currentNode !== undefined) {
+            console.log(currentNode);
 
-        const neighbours = await fetchNeighbours(currentNode);
+            const neighbours = await fetchNeighbours(currentNode);
 
-        for (const neighbour of neighbours) {
-            if (!visited.has(neighbour)) {
-                visited.add(neighbour);
-                queue.push(neighbour);
+            for (const neighbour of neighbours) {
+                if (!visited.has(neighbour)) {
+                    queue.push(neighbour);
+                    visited.add(neighbour);
+                }
             }
+            /* FP:
+              neighbours.forEach(neighbour => {
+                  if (!visited.has(neighbour)) {
+                      visited.add(neighbour);
+                      queue.push(neighbour);
+                  }
+              });
+            */
         }
     }
-}
+};
 
 // DFS 遍歷函數
-async function dfs(start) {
-    const stack = [start]; // 使用堆疊來模擬深度優先搜索
-    const visited = new Set();
+const DFS = async (start: number) => {
+    const stack = [start];
+    const visited = new Set<number>();
     visited.add(start);
 
     while (stack.length > 0) {
-        const currentNode = stack.pop(); // 從堆疊頂部取出節點
+        const currentNode = stack.pop();
         console.log(currentNode);
 
         const neighbours = await fetchNeighbours(currentNode);
-
-        for (const neighbour of neighbours) {
+        for (let neighbour of neighbours) {
             if (!visited.has(neighbour)) {
                 visited.add(neighbour);
-                stack.push(neighbour); // 將未訪問的鄰居推入堆疊
+                stack.push(neighbour);
             }
         }
     }
+};
+
+/* 若含失敗率的方式: Fetch API 要配合 try-catch */
+async function fetchNodeNeighborsWithFailure(node) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (!(node in simulatedData)) {
+                reject(new Error("The specified node does not exist in the dataset"));
+            } else if (Math.random() < 0.2) {
+                reject(new Error("A random error occurred while fetching the node data"));
+            } else {
+                resolve(simulatedData[node] || []);
+            }
+        }, 500);
+    });
 }
-
-/*
-  # 優化
-  Time complexity: O()
-  Space complexity: O()
-*/
-
-
 `;
 
 const testCodeString = `
-// 測試 BFS 從節點 1 開始
-bfs(1); // Output: --
-// 測試 DFS 從節點 1 開始
-dfs(1); // Output: -- `;
+BFS(1); // 測試 BFS 從節點 1 開始 Output: 1, 2, 3, 4, 5, 6, 7
+DFS(1); // 測試 BFS 從節點 1 開始 Output: 1, 4, 6, 7, 5, 3, 2`;
 </script>
 
 <style scoped>
@@ -317,7 +332,8 @@ a:active {
 
 /* 美化化滾動條樣式 */
 .test-block::-webkit-scrollbar {
-  width: 10px;
+  width: 9px;
+  height: 9px;
 }
 
 .test-block::-webkit-scrollbar-track {
@@ -488,6 +504,9 @@ button {
   .code-block {
     font-size: 12px;
     max-height: 300px; /* 限制程式碼區塊高度 */
+  }
+  .test-block {
+    font-size: 12px;
   }
 }
 </style>
