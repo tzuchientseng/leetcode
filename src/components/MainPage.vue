@@ -42,6 +42,7 @@ const FibonacciSequences = defineAsyncComponent(() => import('./problems/Fibonac
 const Euclidean = defineAsyncComponent(() => import('./problems/EuclideanAlgorithm.vue'));
 const AddTwoNumbers = defineAsyncComponent(() => import('./problems/AddTwoNumbers.vue'));
 const BFSAndDFS = defineAsyncComponent(() => import('./problems/BFSAndDFS.vue'))
+const LongestSubstring = defineAsyncComponent(() => import('./problems/LongestSubstring.vue'));
 
 // 其他元件
 import SearchBar from './SearchBar.vue';
@@ -59,6 +60,7 @@ export default defineComponent({
       { id: 3, title: 'BFS & DFS', difficulty: 'other', component: BFSAndDFS },
       { id: 4, title: '1_Two Sum', difficulty: 'easy', component: TwoSum },
       { id: 5, title: '2_Add Two Numbers (Linked-Lists)', difficulty: 'medium', component: AddTwoNumbers},
+      { id: 6, title: '3_Longest Substring (Map<>())', difficulty: 'medium', component: LongestSubstring},
     ]);
 
     // 搜尋關鍵字
