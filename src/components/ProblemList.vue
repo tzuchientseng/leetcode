@@ -40,15 +40,44 @@ export default defineComponent({
 <style scoped>
 /* 問題列表樣式 */
 .problem-list {
+  max-height: 55vh;
   list-style: none;
   width: 70%;
   padding: 0;
   margin: 1px auto; /* 垂直置中 上下增加間距 */
   border: 1px solid #e0e0e0;
   border-radius: 12px;
-  overflow: hidden;
+  overflow: auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   background-color: #fafafa;
+}
+
+/* 滾軸的寬度 */
+.problem-list::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* 滾軸的背景 */
+.problem-list::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+/* 滾軸滑塊的樣式 */
+.problem-list::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 10px;
+}
+
+/* 當滑塊被懸停時的樣式 */
+.problem-list::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}
+
+/* 當滾軸為活躍狀態時 */
+.problem-list::-webkit-scrollbar-thumb:active {
+  background: #808080;
 }
 
 /* 單個列表項樣式 */

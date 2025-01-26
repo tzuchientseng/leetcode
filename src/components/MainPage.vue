@@ -37,12 +37,15 @@ interface Problem {
 }
 
 // 動態載入題目元件
-const TwoSum = defineAsyncComponent(() => import('./problems/TwoSum.vue'));
-const FibonacciSequences = defineAsyncComponent(() => import('./problems/FibonacciSequences.vue'));
 const Euclidean = defineAsyncComponent(() => import('./problems/EuclideanAlgorithm.vue'));
-const AddTwoNumbers = defineAsyncComponent(() => import('./problems/AddTwoNumbers.vue'));
+const FibonacciSequences = defineAsyncComponent(() => import('./problems/FibonacciSequences.vue'));
 const BFSAndDFS = defineAsyncComponent(() => import('./problems/BFSAndDFS.vue'))
+const QuickSort = defineAsyncComponent(() => import('./problems/QuickSort.vue'));
+const TwoSum = defineAsyncComponent(() => import('./problems/TwoSum.vue'));
+const AddTwoNumbers = defineAsyncComponent(() => import('./problems/AddTwoNumbers.vue'));
 const LongestSubstring = defineAsyncComponent(() => import('./problems/LongestSubstring.vue'));
+const BinarySearch = defineAsyncComponent(() => import('./problems/BinarySearch.vue'));
+const SortList = defineAsyncComponent(() => import('./problems/SortList.vue'));
 
 // 其他元件
 import SearchBar from './SearchBar.vue';
@@ -58,9 +61,12 @@ export default defineComponent({
       { id: 1, title: 'Euclidean Algorithm', difficulty: 'other', component:  Euclidean},
       { id: 2, title: 'Fibonacci Sequences', difficulty: 'other', component: FibonacciSequences },
       { id: 3, title: 'BFS & DFS', difficulty: 'other', component: BFSAndDFS },
-      { id: 4, title: '1_Two Sum', difficulty: 'easy', component: TwoSum },
-      { id: 5, title: '2_Add Two Numbers (Linked-Lists)', difficulty: 'medium', component: AddTwoNumbers},
-      { id: 6, title: '3_Longest Substring (Map<>())', difficulty: 'medium', component: LongestSubstring},
+      { id: 4, title: 'Quick Sort', difficulty: 'other', component: QuickSort},
+      { id: 5, title: '1_Two Sum', difficulty: 'easy', component: TwoSum },
+      { id: 6, title: '2_Add Two Numbers (Linked-Lists)', difficulty: 'medium', component: AddTwoNumbers},
+      { id: 7, title: '3_Longest Substring (Map<>())', difficulty: 'medium', component: LongestSubstring},
+      { id: 8, title: '704_Binary Search', difficulty: 'easy', component: BinarySearch},
+      { id: 9, title: '148_Sort List (Linked-Lists)', difficulty: 'medium', component: SortList},
     ]);
 
     // 搜尋關鍵字
