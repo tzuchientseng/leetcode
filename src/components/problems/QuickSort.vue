@@ -10,11 +10,13 @@
     </a>
     <p>
       <strong>問題:</strong>
-      給定
+      給定一個由數字組成的陣列，使用 Quick Sort 演算法將陣列中的元素排序為遞增順序。
     </p>
     <div v-if="showMore">
       <p>
-        如果
+        如果陣列的長度為零或一，則它已經是排序好的，無需進一步操作。否則，將陣列分割為兩個子陣列：
+        一個包含所有小於基準點 (pivot) 的元素，另一個包含所有大於基準點的元素。對這兩個子陣列遞迴執行
+        Quick Sort，最後將排序結果合併為完整的排序陣列。
       </p>
     </div>
     <button id="toggleShowMoreButton" @click="toggleShowMore">
@@ -51,16 +53,93 @@ const toggleShowMore = () => {
 
 const codeString = `
 /*
-  Method:
-  Time complexity: O()
-  Space complexity: O()
+  Quick Sort: moves smaller elements to left of a pivot(the last element of the array). recursively divide array in 2 partitions
+  Time complexity: 
+    - Best case: O(nlog(n))
+    - Average case: O(nlog(n))
+    - Worst case: O(n^2)
+  Space complexity: O(log(n))
+*/
+class QuickSort {
+    static quicksort(arr: number[], start: number, end: number): void {
+        if (end <= start) return; // base case
+        const pivot = QuickSort.partition(arr, start, end);
+        QuickSort.quicksort(arr, start, pivot - 1);
+        QuickSort.quicksort(arr, pivot + 1, end);
+    }
+
+    private static partition(arr: number[], start: number, end: number): number {
+    /*
+      Concept:
+        1. j >= pivot -> do nothing
+        2. j < pivot -> i++,  swap arr[i] and arr[j]
+        3. End of loop, i++, swap arr[i] and arr[end] (pivot)
+        4. return pivot's ending position
+    */
+        const pivot = arr[end];
+        let i = start - 1;
+
+        for (let j = start; j <= end - 1; j++) {
+            if (arr[j] < pivot) {
+                i++;
+                [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap arr[i] and arr[j]
+            }
+        }
+        i++;
+        [arr[i], arr[end]] = [arr[end], arr[i]];
+        return i; // Return the pivot's final index
+    }
+}
+
+/*
+  Time complexity: 
+    - Best case: O(nlog(n))
+    - Average case: O(nlog(n))
+    - Worst case: O(n^2)
+  Space complexity:
+    - Best case: O(log(n))
+    - Average case: O(log(n))
+    - Worst case: O(log(n))
 */
 
-`;
+function quickSort(arr: number[]): number[] {
+    // 基本情況：如果陣列長度小於等於1，直接返回
+    if (arr.length <= 1) {
+        return arr;
+    }
+
+    // 選擇基準值，這裡使用陣列的中間值作為基準值
+    const pivot = arr[Math.floor(arr.length / 2)];
+
+    // 定義三個陣列，分別存放小於基準值、等於基準值和大於基準值的元素
+    const left: number[] = [];
+    const right: number[] = [];
+    const equal: number[] = [];
+
+    // 遍歷陣列，將元素分類
+    for (const num of arr) {
+        if (num < pivot) {
+            left.push(num);
+        } else if (num > pivot) {
+            right.push(num);
+        } else {
+            equal.push(num);
+        }
+    }
+
+    // 遞迴排序左右兩部分，並合併結果
+    return [...quickSort(left), ...equal, ...quickSort(right)];
+}`;
 
 const testCodeString = `
+const array = [8, 2, 5, 3, 9, 4, 7, 6, 1];
+QuickSort.quicksort(array, 0, array.length - 1);
+console.log(array.join(" ")); // Output: 1 2 3 4 5 6 7 8 9
 
-console.log(XXX()); // Output: 4`;
+//
+const unsortedArray = [3, 6, 8, 10, 1, 2, 1];
+const sortedArray = quickSort(unsortedArray);
+console.log("排序後的陣列:", sortedArray);`;
 </script>
 
 <style scoped>
