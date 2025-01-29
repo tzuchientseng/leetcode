@@ -19,6 +19,7 @@
     <!-- 我的解答 -->
     <h3>-- 我的解答 --</h3>
     <pre class="code-block">
+      <button class="copy-btn" @click="copyToClipboard">{{ buttonText }}</button>
       <code class="language-javascript">{{ codeString }}</code>
     </pre>
 
@@ -38,7 +39,21 @@ onMounted(() => {
   Prism.highlightAll(); // 啟用語法高亮
 });
 
-const codeString = ref(`
+const buttonText = ref('Copy')
+
+const copyToClipboard = async () => {
+  try {
+    await navigator.clipboard.writeText(codeString);
+    buttonText.value = "Copied!";
+    setTimeout(() => {
+      buttonText.value = "Copy";
+    }, 1500);
+  } catch (err) {
+    console.error("Failed to copy: ", err);
+  }
+};
+
+const codeString = `
 /*
     Time complexity: O(n) - Here, n is the length of the string s.
     Space complexity: O(min(m, n)) - Here, m is the size of the character set, and n is the length of the string s.
@@ -95,11 +110,11 @@ const lengthOfLongestSubstring = (str: string): number => {
   - ans 變成 3
   - charIndexMap 更新為 {'a': 3, 'b': 1, 'c': 2}
 */
-`);
+`;
 
-const testCodeString = ref(`
+const testCodeString = `
 console.log(lengthOfLongestSubstring("abcabcbb")); // Output: 3
-console.log(lengthOfLongestSubstring("bbbbb")); // Output: 1`);
+console.log(lengthOfLongestSubstring("bbbbb")); // Output: 1`;
 </script>
 
 <style scoped>
@@ -251,8 +266,29 @@ button {
   outline: none;
 }
 
-.problem-detail button:focus {
-  outline: 2px solid #ff9900;
+.copy-btn {
+  position: relative;
+  float: right;
+  padding: 5px 10px;
+  background-color: #29b6f6;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+  /* display: none; */
+}
+
+.copy-btn:hover{
+  background-color: #1e88e5;
+  animation: shake 500ms;
+}
+
+@keyframes shake {
+    0% { rotate: 0deg; }
+    30% { rotate: 17deg; }
+    60% { rotate: -17deg; }
+    100% { rotate: 0deg; }
 }
 
 @media (max-width: 600px) {

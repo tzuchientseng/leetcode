@@ -28,6 +28,7 @@
     <!-- 我的解答 -->
     <h3>-- 我的解答 --</h3>
     <pre class="code-block">
+      <button class="copy-btn" @click="copyToClipboard">{{ buttonText }}</button>
       <code class="language-javascript">{{ codeString }}</code>
     </pre>
 
@@ -48,9 +49,22 @@ onMounted(() => {
 });
 
 const showMore = ref(false);
+const buttonText = ref('Copy')
 
 const toggleShowMore = () => {
   showMore.value = !showMore.value;
+};
+
+const copyToClipboard = async () => {
+  try {
+    await navigator.clipboard.writeText(codeString);
+    buttonText.value = "Copied!";
+    setTimeout(() => {
+      buttonText.value = "Copy";
+    }, 1500);
+  } catch (err) {
+    console.error("Failed to copy: ", err);
+  }
 };
 
 const codeString = `
@@ -316,8 +330,29 @@ button {
   outline: none;
 }
 
-.problem-detail button:focus {
-  outline: 2px solid #ff9900;
+.copy-btn {
+  position: relative;
+  float: right;
+  padding: 5px 10px;
+  background-color: #29b6f6;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+  /* display: none; */
+}
+
+.copy-btn:hover{
+  background-color: #1e88e5;
+  animation: shake 500ms;
+}
+
+@keyframes shake {
+    0% { rotate: 0deg; }
+    30% { rotate: 17deg; }
+    60% { rotate: -17deg; }
+    100% { rotate: 0deg; }
 }
 
 /* Show More Button Style */

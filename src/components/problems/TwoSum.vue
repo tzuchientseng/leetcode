@@ -19,6 +19,7 @@
     <!-- 我的解答 -->
     <h3>-- 我的解答 --</h3>
     <pre class="code-block">
+      <button class="copy-btn" @click="copyToClipboard">{{ buttonText }}</button>
       <code class="language-javascript">{{ codeString }}</code>
     </pre>
 
@@ -34,11 +35,25 @@
 import { ref, onMounted } from 'vue';
 import Prism from 'prismjs';
 
+const buttonText = ref('Copy')
+
 onMounted(() => {
   Prism.highlightAll(); // 啟用語法高亮
 });
 
-const codeString = ref(`
+const copyToClipboard = async () => {
+  try {
+    await navigator.clipboard.writeText(codeString);
+    buttonText.value = "Copied!";
+    setTimeout(() => {
+      buttonText.value = "Copy";
+    }, 1500);
+  } catch (err) {
+    console.error("Failed to copy: ", err);
+  }
+};
+
+const codeString = `
 /*
   Method 1: Brute Force
   Time complexity o(n(n-1)/2) == o(n^2)
@@ -98,12 +113,12 @@ const twoSumReduce = (nums: number[], target: number): number[] => {
   );
   return result.indices;
 };
-`);
+`;
 
-const testCodeString = ref(`
+const testCodeString = `
 console.log(twoSumBruteForce([2, 7, 11, 15], 9)); // [0, 1]
 console.log(twoSumHashMap([3, 2, 4], 6)); // [1, 2]
-console.log(twoSumReduce([3, 3], 6)); // [0, 1]`);
+console.log(twoSumReduce([3, 3], 6)); // [0, 1]`;
 </script>
 
 <style scoped>
@@ -255,8 +270,29 @@ button {
   outline: none;
 }
 
-.problem-detail button:focus {
-  outline: 2px solid #ff9900;
+.copy-btn {
+  position: relative;
+  float: right;
+  padding: 5px 10px;
+  background-color: #29b6f6;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+  /* display: none; */
+}
+
+.copy-btn:hover{
+  background-color: #1e88e5;
+  animation: shake 500ms;
+}
+
+@keyframes shake {
+    0% { rotate: 0deg; }
+    30% { rotate: 17deg; }
+    60% { rotate: -17deg; }
+    100% { rotate: 0deg; }
 }
 
 @media (max-width: 600px) {

@@ -31,6 +31,7 @@
     <!-- 我的解答 -->
     <h3>-- 我的解答 --</h3>
     <pre class="code-block">
+      <button class="copy-btn" @click="copyToClipboard">{{ buttonText }}</button>
       <code class="language-javascript">{{ codeString }}</code>
     </pre>
 
@@ -78,6 +79,7 @@ const showMore = ref(false);
 const showModal = ref(false);
 const isLoading = ref(false);
 const imageSrc = ref<string>("");
+const buttonText = ref('Copy')
 
 // Toggle show more/less content
 const toggleShowMore = (): void => {
@@ -107,6 +109,18 @@ const openModal = (): void => {
   showModal.value = true;
   isLoading.value = true;
   imageSrc.value = BFSAndDFS;
+};
+
+const copyToClipboard = async () => {
+  try {
+    await navigator.clipboard.writeText(codeString);
+    buttonText.value = "Copied!";
+    setTimeout(() => {
+      buttonText.value = "Copy";
+    }, 1500);
+  } catch (err) {
+    console.error("Failed to copy: ", err);
+  }
 };
 
 const codeString = `
@@ -360,6 +374,31 @@ button {
   outline: none;
 }
 
+.copy-btn {
+  position: relative;
+  float: right;
+  padding: 5px 10px;
+  background-color: #29b6f6;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+  /* display: none; */
+}
+
+.copy-btn:hover{
+  background-color: #1e88e5;
+  animation: shake 500ms;
+}
+
+@keyframes shake {
+    0% { rotate: 0deg; }
+    30% { rotate: 17deg; }
+    60% { rotate: -17deg; }
+    100% { rotate: 0deg; }
+}
+
 /* Show More Button Style */
 #toggleShowMoreButton {
   background: rgb(65, 64, 64);
@@ -396,11 +435,6 @@ button {
 
 #showModalButton:hover {
     background-color: #0056b3;
-}
-
-
-.problem-detail button:focus {
-  outline: 2px solid #ff9900;
 }
 
 /* Modal Overlay */
