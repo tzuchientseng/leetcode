@@ -66,7 +66,7 @@ const copyToClipboard = async () => {
 const codeString = `
 /*
   Method 1: Iterative Approach (Declarative)
-  Time complexity: O(logn)
+  Time complexity: O(log n)
   Space complexity: O(1)
 */
 function binarySearch(nums: number[], target: number): number {

@@ -65,6 +65,7 @@ const copyToClipboard = async () => {
 };
 
 const codeString = `
+/* ------------------------------------------ GCD (Greatest Common Divisor) ------------------------------------------ */
 /*
   Method 1
   Time complexity: O(log(min(a, b))) // 歐幾里得算法的*最差情況*出現在兩個數是連續的斐波那契數每次迭代的問題規模縮小到原來的 黃金比例約 1.618 倍 e.g: GCD(21, 13)
@@ -98,14 +99,37 @@ const GCD = (dividend: number, divisor: number): number => {
 
 /*
   Mutiple GCD: Functional Programming => Recursion + reduce()
-  Time complexity: O(nlog(m)) 
+  Time complexity: O(n*log(m)) 
   Space complexity: O(log(m)) 
 
 */
 const gcdRecursive = (dividend: number, divisor: number): number => divisor === 0 ? dividend : gcdRecursive(divisor, dividend % divisor);
 const gcdReduce  = (numbers: number[]): number => numbers.reduce((acc, cur) => gcdRecursive(acc, cur), numbers[0]);
 
-/* ------------------------------------------ 以上為常見做法 ------------------------------------------ */
+/* ------------------------------------------ LCM (Least Common Multiple) ------------------------------------------ */
+/*
+  Type 1: Computes the Least Common Multiple (LCM) of two numbers
+  Time complexity: O(log(min(a, b)))
+  Space complexity: O(1)
+*/
+const GCD = (dividend: number, divisor: number): number => {
+    while (divisor !==0 ) {
+        [dividend, divisor] = [divisor, dividend % divisor];
+    }
+    return dividend;
+};
+const LCM = (num1: number, num2: number): number => Math.abs(num1 * num2) / GCD(num1, num2);
+
+/*
+  Type 2: Computes the Least Common Multiple (LCM) of multiple numbers
+  Time complexity: O(n*log(M)) // where M is the maximum
+  Space complexity: O(1)
+*/
+const computeMultipleLCM = (numbers: number[]): number => {
+   return  numbers.reduce((acc, cur) => (acc * cur) / GCD(acc, cur) , numbers[0])
+}
+
+/* ------------------------------------------ Others ------------------------------------------ */
 
 /*
   Advance Method 1: Functional Programming => 柯里化 Currying
@@ -150,7 +174,11 @@ console.log(gcdWith56(28)); // Output: 28
 const testCodeString = `
 console.log(GCD(18, 48)); // Output: 6
 console.log(gcdRecursive(18, 48)); // Output: 6
-console.log(gcdMultiple([48, 18, 30])); // Output: 6`;
+console.log(gcdMultiple([48, 18, 30])); // Output: 6
+
+console.log(LCM(18, 48)); // Output: 144
+console.log(computeMultipleLCM([12, 18, 24]));`;
+
 </script>
 
 <style scoped>
