@@ -67,7 +67,7 @@ const copyToClipboard = async () => {
 
 const codeString = `
 /*
-  Quick Sort: moves smaller elements to left of a pivot(the last element of the array). recursively divide array in 2 partitions
+  Quick Sort 原地(In-Place): moves smaller elements to left of a pivot(the last element of the array). recursively divide array in 2 partitions
   Time complexity: 
     - Best case: Ω(nlog(n))
     - Average case: Θ(nlog(n))
@@ -106,6 +106,7 @@ class QuickSort {
 }
 
 /*
+  Quick Sort 非原地(Out-of-Place)
   Time complexity: 
     - Best case: Ω(nlog(n))
     - Average case: Θ(nlog(n))
@@ -117,7 +118,7 @@ class QuickSort {
 */
 
 function quickSort(arr: number[]): number[] {
-    // 基本情況：如果陣列長度小於等於1，直接返回
+    // 基本情況: 如果陣列長度小於等於1，直接返回
     if (arr.length <= 1) {
         return arr;
     }
