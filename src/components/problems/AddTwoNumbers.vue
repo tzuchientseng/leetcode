@@ -72,6 +72,7 @@ const codeString = `
   Space complexity: O(n)
 */
 class ListNode {
+    /* ------------------------------------------ Structure ------------------------------------------ */
     public val: number;
     public next: ListNode | null;
 
@@ -80,6 +81,13 @@ class ListNode {
         this.next = next;
     }
 
+    /* ------------------------------------------ Create ------------------------------------------ */
+      /* 
+      💡Concept
+        1. new 一個 dummy head
+        2. 賦值
+        3. 回傳 dummy.next
+      */
     public static create(values: number[]): ListNode | null {
         let dummy = new ListNode(0); // 虛擬頭節點
         let current = dummy;
@@ -87,16 +95,18 @@ class ListNode {
             current.next = new ListNode(val);
             current = current.next;
         }
-          /* FP 寫法
-            values.map((val) => {
+
+        /* FP 寫法
+        values.forEach((val) => {
             current.next = new ListNode(val);
             current = current.next;
-          */
         });
-  
+        */
+
         return dummy.next; // 返回真正的頭節點
     }
 
+    /* ------------------------------------------ Print ------------------------------------------ */
     public static print(head: ListNode | null): void {
         let current = head;
         let result: number[] = [];
@@ -107,16 +117,17 @@ class ListNode {
         console.log(result.join(" -> "));
     }
 
-      /* FP 寫法
-        public static printFunctional(head: ListNode | null): void {
-            const toArray = (node: ListNode | null, acc: number[] = []): number[] =>
-                node === null ? acc : toArray(node.next, [...acc, node.val]);
+    /* FP 寫法
+    public static printFunctional(head: ListNode | null): void {
+        const toArray = (node: ListNode | null, acc: number[] = []): number[] =>
+            node === null ? acc : toArray(node.next, [...acc, node.val]);
 
-            const result = toArray(head);
-            console.log(result.join(" -> "));
-        }   
-      */
+        const result = toArray(head);
+        console.log(result.join(" -> "));
+    }
+    */
 
+    /* ------------------------------------------ Leetcode_2 ------------------------------------------ */
     public static addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
         let dummy = new ListNode(0); // 虛擬頭節點
         let current = dummy;
@@ -126,7 +137,7 @@ class ListNode {
             let sum = carry;
 
             if (l1 !== null) {
-                sum += l1.val; 
+                sum += l1.val;
                 l1 = l1.next;
             }
 
@@ -142,13 +153,101 @@ class ListNode {
 
         return dummy.next;
     }
+
+    /* ------------------------------------------ Insertion (插入) ------------------------------------------ */
+    public static insert(head: ListNode | null, index: number, val: number): ListNode | null {
+        let dummy = new ListNode(0, head);
+        let current = dummy;
+        let count = 0;
+
+        while (current !== null && count < index) {
+            current = current.next!;
+            count++;
+        }
+
+        if (current !== null) {
+            let newNode = new ListNode(val, current.next);
+            current.next = newNode;
+        }
+
+        return dummy.next;
+    }
+
+    /* ------------------------------------------ Deletion (刪除) ------------------------------------------ */
+    public static delete(head: ListNode | null, index: number): ListNode | null {
+        let dummy = new ListNode(0, head);
+        let current = dummy;
+        let count = 0;
+
+        while (current.next !== null && count < index) {
+            current = current.next;
+            count++;
+        }
+
+        if (current.next !== null) {
+            current.next = current.next.next;
+        }
+
+        return dummy.next;
+    }
+
+    /* ------------------------------------------ Update (更新) ------------------------------------------ */
+    public static update(head: ListNode | null, index: number, newVal: number): ListNode | null {
+        let current = head;
+        let count = 0;
+
+        while (current !== null && count < index) {
+            current = current.next;
+            count++;
+        }
+
+        if (current !== null) {
+            current.val = newVal;
+        }
+
+        return head;
+    }
+
+    /* ------------------------------------------ Search (搜尋) ------------------------------------------ */
+    public static search(head: ListNode | null, val: number): number {
+        let current = head;
+        let index = 0;
+
+        while (current !== null) {
+            if (current.val === val) {
+                return index;
+            }
+            current = current.next;
+            index++;
+        }
+
+        return -1; // 若找不到則回傳 -1
+    }
 }
 
-const l1 = ListNode.create([2, 3, 4]); // ListNode.print(l1); // 2 -> 3 -> 4 (432)
-const l2 = ListNode.create([5, 6, 4]); // ListNode.print(l2); // 5 -> 6 -> 4 (465)
+/* ------------------------ 測試 ------------------------ */
+const l1 = ListNode.create([2, 3, 4]);
+const l2 = ListNode.create([5, 6, 4]);
 
-const result = ListNode.addTwoNumber(l1, l2);
-ListNode.print(result); // 7 -> 9 -> 8 (897)
+const result = ListNode.addTwoNumbers(l1, l2);
+ListNode.print(result); // Expected output: 7 -> 9 -> 8
+
+// 測試插入
+const inserted = ListNode.insert(l1, 1, 10);
+ListNode.print(inserted); // Expected: 2 -> 10 -> 3 -> 4
+
+// 測試刪除
+const deleted = ListNode.delete(inserted, 1);
+ListNode.print(deleted); // Expected: 2 -> 3 -> 4
+
+// 測試更新
+const updated = ListNode.update(deleted, 1, 99);
+ListNode.print(updated); // Expected: 2 -> 99 -> 4
+
+// 測試搜尋
+console.log(ListNode.search(updated, 99)); // Expected: 1
+console.log(ListNode.search(updated, 100)); // Expected: -1
+
 `;
 
 const testCodeString = `

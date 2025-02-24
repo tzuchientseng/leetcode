@@ -84,7 +84,7 @@ class QuickSort {
 
     private static partition(arr: number[], start: number, end: number): number {
     /*
-      Concept:
+     💡Concept  
         1. j >= pivot -> do nothing
         2. j < pivot -> i++,  swap arr[i] and arr[j]
         3. End of loop, i++, swap arr[i] and arr[end] (pivot)

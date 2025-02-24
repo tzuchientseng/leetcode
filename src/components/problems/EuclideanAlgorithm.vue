@@ -67,10 +67,11 @@ const copyToClipboard = async () => {
 const codeString = `
 /* ------------------------------------------ GCD (Greatest Common Divisor) ------------------------------------------ */
 /*
+💡Concept: GCD(a, b) = GCD(b, a % b)
   Method 1
   Time complexity: O(log(min(a, b))) // 歐幾里得算法的*最差情況*出現在兩個數是連續的斐波那契數每次迭代的問題規模縮小到原來的 黃金比例約 1.618 倍 e.g: GCD(21, 13)
   Space complexity: O(1)
-  (ａ< b): (GCD(18, 48))
+  (a < b): (GCD(18, 48))
       n = 1; 18 = 48 * 0 + 18 及 18 mod 48
       n = 2; 48 = 18 * 2 + 12 及 48 mod (18 mod 48) = 12
       n = 3; 18 = 12 * 1 + 6  及 18 mod 12 = 6
@@ -108,6 +109,7 @@ const gcdReduce  = (numbers: number[]): number => numbers.reduce((acc, cur) => g
 
 /* ------------------------------------------ LCM (Least Common Multiple) ------------------------------------------ */
 /*
+💡Concept: LCM(num1, num2) = Math.abs(num1 * num2) / GCD(num1, num2);
   Type 1: Computes the Least Common Multiple (LCM) of two numbers
   Time complexity: O(log(min(a, b)))
   Space complexity: O(1)
