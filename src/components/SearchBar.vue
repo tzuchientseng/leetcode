@@ -49,3 +49,18 @@ export default defineComponent({
   }
 }
 </style>
+
+<!-- <script lang="ts" setup>
+import { defineProps, defineEmits } from 'vue';
+
+const props = defineProps<{
+  modelValue: string;
+}>();
+
+const emit = defineEmits(['update:modelValue']);
+
+const handleInput = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  emit('update:modelValue', target.value);
+};
+</script> -->
