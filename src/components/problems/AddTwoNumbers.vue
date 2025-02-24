@@ -224,13 +224,13 @@ class ListNode {
         return -1; // 若找不到則回傳 -1
     }
 }
+`;
 
-/* ------------------------ 測試 ------------------------ */
-const l1 = ListNode.create([2, 3, 4]);
-const l2 = ListNode.create([5, 6, 4]);
-
+const testCodeString = `
+const l1 = ListNode.create([2, 3, 4]); // ListNode.print(l1); // 2 -> 3 -> 4 (432)
+const l2 = ListNode.create([5, 6, 4]); // ListNode.print(l2); // 5 -> 6 -> 4 (465)
 const result = ListNode.addTwoNumbers(l1, l2);
-ListNode.print(result); // Expected output: 7 -> 9 -> 8
+ListNode.print(result); // Expected output: 7 -> 9 -> 8 (897)
 
 // 測試插入
 const inserted = ListNode.insert(l1, 1, 10);
@@ -247,14 +247,7 @@ ListNode.print(updated); // Expected: 2 -> 99 -> 4
 // 測試搜尋
 console.log(ListNode.search(updated, 99)); // Expected: 1
 console.log(ListNode.search(updated, 100)); // Expected: -1
-
 `;
-
-const testCodeString = `
-const l1 = ListNode.create([2, 3, 4]); // ListNode.print(l1); // 2 -> 3 -> 4 (432)
-const l2 = ListNode.create([5, 6, 4]); // ListNode.print(l2); // 5 -> 6 -> 4 (465)
-const result = ListNode.addTwoNumber(l1, l2);
-ListNode.print(result); // Output: 7 -> 9 -> 8 (897)`;
 </script>
 
 <style scoped>
