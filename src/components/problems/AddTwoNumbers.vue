@@ -107,6 +107,11 @@ class ListNode {
     }
 
     /* ------------------------------------------ Print ------------------------------------------ */
+      /* 
+      💡Concept
+        1. head 傳入做淺拷貝 (保留頭)
+        2. 用 array 存取
+      */
     public static print(head: ListNode | null): void {
         let current = head;
         let result: number[] = [];
@@ -155,6 +160,12 @@ class ListNode {
     }
 
     /* ------------------------------------------ Insertion (插入) ------------------------------------------ */
+      /* 
+      💡Concept
+        1. 原鏈結開頭新增假節點 0
+        2. 透過 count < index 將 current 推到對的位置
+        3. 插入且接續 new ListNode(val, current.next);
+      */
     public static insert(head: ListNode | null, index: number, val: number): ListNode | null {
         let dummy = new ListNode(0, head);
         let current = dummy;
@@ -174,6 +185,12 @@ class ListNode {
     }
 
     /* ------------------------------------------ Deletion (刪除) ------------------------------------------ */
+      /* 
+      💡Concept
+        1. 原鏈結開頭新增假節點 0
+        2. 透過 count < index 將 current 推到對的位置
+        3. 取代前一個節點 current.next = current.next.next;
+      */
     public static delete(head: ListNode | null, index: number): ListNode | null {
         let dummy = new ListNode(0, head);
         let current = dummy;
@@ -192,6 +209,12 @@ class ListNode {
     }
 
     /* ------------------------------------------ Update (更新) ------------------------------------------ */
+      /* 
+      💡Concept
+        1. 淺拷貝
+        2. 透過 count < index 將 current 推到對的位置
+        3. 直接換成新數值
+      */
     public static update(head: ListNode | null, index: number, newVal: number): ListNode | null {
         let current = head;
         let count = 0;
@@ -209,6 +232,11 @@ class ListNode {
     }
 
     /* ------------------------------------------ Search (搜尋) ------------------------------------------ */
+      /* 
+      💡Concept
+        1. 淺拷貝
+        2. while + if 
+      */
     public static search(head: ListNode | null, val: number): number {
         let current = head;
         let index = 0;
