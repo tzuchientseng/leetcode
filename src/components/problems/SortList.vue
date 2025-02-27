@@ -10,11 +10,11 @@
     </a>
     <p>
       <strong>問題:</strong>
-      給定
+      我們要對一個單向鏈表 (Singly Linked List) 進行排序，並返回排序後的鏈表。
     </p>
     <div v-if="showMore">
       <p>
-        如果
+        O(n log n) 時間複雜度 和 O(1) 空間複雜度 來解題。
       </p>
     </div>
     <button id="toggleShowMoreButton" @click="toggleShowMore">
@@ -65,7 +65,7 @@ const copyToClipboard = async () => {
 
 const codeString = `
 /*
-  Time complexity: O(nlogn)（每次遞迴 log n 層，每層 O(n) 合併）
+  Time complexity: O(n log n)（每次遞迴 log n 層，每層 O(n) 合併）
   Space complexity: O(1)（使用 next 指標原地排序，但遞迴棧使用 O(log n)）
 */
 class ListNode {
