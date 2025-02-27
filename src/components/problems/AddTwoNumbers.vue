@@ -89,7 +89,7 @@ class ListNode {
         3. 回傳 dummy.next
       */
     public static create(values: number[]): ListNode | null {
-        let dummy = new ListNode(0); // 虛擬頭節點
+        const dummy = new ListNode(0); // 虛擬頭節點
         let current = dummy;
         for (let val of values) {
             current.next = new ListNode(val);
@@ -163,11 +163,11 @@ class ListNode {
       /* 
       💡Concept
         1. 原鏈結開頭新增假節點 0
-        2. 透過 count < index 將 current 推到對的位置
+        2. 透過 count < index 將 current 推到前一個位置
         3. 插入且接續 new ListNode(val, current.next);
       */
     public static insert(head: ListNode | null, index: number, val: number): ListNode | null {
-        let dummy = new ListNode(0, head);
+        const dummy = new ListNode(0, head);
         let current = dummy;
         let count = 0;
 
@@ -188,11 +188,11 @@ class ListNode {
       /* 
       💡Concept
         1. 原鏈結開頭新增假節點 0
-        2. 透過 count < index 將 current 推到對的位置
+        2. 透過 count < index 將 current 推到前一個位置
         3. 取代前一個節點 current.next = current.next.next;
       */
     public static delete(head: ListNode | null, index: number): ListNode | null {
-        let dummy = new ListNode(0, head);
+        const dummy = new ListNode(0, head);
         let current = dummy;
         let count = 0;
 
@@ -212,7 +212,7 @@ class ListNode {
       /* 
       💡Concept
         1. 淺拷貝
-        2. 透過 count < index 將 current 推到對的位置
+        2. 透過 count < index 將 current 推到前一個位置
         3. 直接換成新數值
       */
     public static update(head: ListNode | null, index: number, newVal: number): ListNode | null {

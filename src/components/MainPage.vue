@@ -66,7 +66,7 @@ export default defineComponent({
       { id: 6, title: '2_Add Two Numbers (Linked-Lists)', difficulty: 'medium', component: AddTwoNumbers},
       { id: 7, title: '3_Longest Substring (Map<>())', difficulty: 'medium', component: LongestSubstring},
       { id: 8, title: '704_Binary Search', difficulty: 'easy', component: BinarySearch},
-      { id: 9, title: '148_Sort List (Linked-Lists)', difficulty: 'medium', component: SortList},
+      { id: 9, title: '148_Sort Linked-Lists (Merge-sort)', difficulty: 'medium', component: SortList},
     ]);
 
     // 搜尋關鍵字
