@@ -65,16 +65,118 @@ const copyToClipboard = async () => {
 
 const codeString = `
 /*
-  Method
-  Time complexity: O()
-  Space complexity: O()
+  Time complexity: O(nlogn)（每次遞迴 log n 層，每層 O(n) 合併）
+  Space complexity: O(1)（使用 next 指標原地排序，但遞迴棧使用 O(log n)）
 */
+class ListNode {
+  public val: number;
+  public next: ListNode | null;
 
+  constructor(val: number, next: ListNode | null = null) {
+    this.val = val;
+    this.next = next;
+  }
+
+  /* ------------------------------------------ create ------------------------------------------ */
+  public static create(values: number[]): ListNode | null {
+    const dummy = new ListNode(0);
+    let current = dummy;
+
+    values.forEach(value => {
+      current.next = new ListNode(value);
+      current = current.next;
+    });
+
+    return dummy.next;
+  }
+
+  /* ------------------------------------------ print ------------------------------------------ */
+  public static print(head: ListNode | null): void {
+    let current = head;
+    let result: number[] = [];
+
+    while (current !== null) {
+      result.push(current.val);
+      current = current.next;
+    }
+
+    console.log(result.join(" -> "));
+  }
+
+  /* ------------------------------------------ sortList (Merge Sort) ------------------------------------------ */
+    /* 
+    💡Concept
+      Step 1: Find the middle of the list
+      Step 2: Recursively sort both halves. 賦值
+      Step 3: Merge the sorted halves
+    */
+  public static sortList(head: ListNode | null): ListNode | null {
+    if (!head || !head.next) return head; // Base case: empty or single node list
+
+    let mid: ListNode = ListNode.getMid(head);
+    let left: ListNode | null = head;
+    let right: ListNode | null = mid.next;
+    mid.next = null; // Split into two halves
+
+    left = ListNode.sortList(left);
+    right = ListNode.sortList(right);
+
+    return ListNode.merge(left, right);
+  }
+
+  /* ------------------------------------------ getMid (Find Middle Node) ------------------------------------------ */
+  private static getMid(head: ListNode): ListNode {
+    let slow = head;
+    let fast = head;
+
+    while (fast.next && fast.next.next) {
+      slow = slow.next!;
+      fast = fast.next.next;
+    }
+
+    return slow;
+  }
+
+  /* ------------------------------------------ merge (Merge Two Sorted Lists) ------------------------------------------ */
+  private static merge(left: ListNode | null, right: ListNode | null): ListNode | null {
+    let dummy = new ListNode(0);
+    let tail = dummy;
+
+    while (left && right) {
+      if (left.val < right.val) {
+        tail.next = left;
+        left = left.next;
+      } else {
+        tail.next = right;
+        right = right.next;
+      }
+      tail = tail.next;
+    }
+
+    // Append remaining nodes
+    tail.next = left || right;
+
+    return dummy.next;
+  }
+}
+
+const linkedList = ListNode.create([4, 2, 1, 3]);
+console.log("Original List:");
+ListNode.print(linkedList);
+
+const sortedList = ListNode.sortList(linkedList);
+console.log("Sorted List:");
+ListNode.print(sortedList);
 `;
 
 const testCodeString = `
+const linkedList = ListNode.create([4, 2, 1, 3]);
+console.log("Original List:");
+ListNode.print(linkedList);
 
-console.log(XXX());`;
+const sortedList = ListNode.sortList(linkedList);
+console.log("Sorted List:");
+ListNode.print(sortedList);`;
 </script>
 
 <style scoped>
