@@ -159,14 +159,6 @@ class ListNode {
     return dummy.next;
   }
 }
-
-const linkedList = ListNode.create([4, 2, 1, 3]);
-console.log("Original List:");
-ListNode.print(linkedList);
-
-const sortedList = ListNode.sortList(linkedList);
-console.log("Sorted List:");
-ListNode.print(sortedList);
 `;
 
 const testCodeString = `
