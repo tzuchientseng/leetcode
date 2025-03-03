@@ -41,6 +41,7 @@ const Euclidean = defineAsyncComponent(() => import('./problems/EuclideanAlgorit
 const FibonacciSequences = defineAsyncComponent(() => import('./problems/FibonacciSequences.vue'));
 const BFSAndDFS = defineAsyncComponent(() => import('./problems/BFSAndDFS.vue'))
 const QuickSort = defineAsyncComponent(() => import('./problems/QuickSort.vue'));
+const PriorityQueue = defineAsyncComponent(() => import('./problems/PriorityQueue.vue'));
 const TwoSum = defineAsyncComponent(() => import('./problems/TwoSum.vue'));
 const AddTwoNumbers = defineAsyncComponent(() => import('./problems/AddTwoNumbers.vue'));
 const LongestSubstring = defineAsyncComponent(() => import('./problems/LongestSubstring.vue'));
@@ -62,11 +63,12 @@ export default defineComponent({
       { id: 2, title: 'Fibonacci Sequences', difficulty: 'other', component: FibonacciSequences },
       { id: 3, title: 'BFS & DFS', difficulty: 'other', component: BFSAndDFS },
       { id: 4, title: 'Quick Sort', difficulty: 'other', component: QuickSort},
-      { id: 5, title: '1_Two Sum', difficulty: 'easy', component: TwoSum },
-      { id: 6, title: '2_Add Two Numbers (Linked-Lists)', difficulty: 'medium', component: AddTwoNumbers},
-      { id: 7, title: '3_Longest Substring (Map<>())', difficulty: 'medium', component: LongestSubstring},
-      { id: 8, title: '704_Binary Search', difficulty: 'easy', component: BinarySearch},
-      { id: 9, title: '148_Sort Linked-Lists (Merge-sort)', difficulty: 'medium', component: SortList},
+      { id: 5, title: 'Prioriy Queue', difficulty: 'other', component: PriorityQueue},
+      { id: 6, title: '1_Two Sum', difficulty: 'easy', component: TwoSum },
+      { id: 7, title: '2_Add Two Numbers (Linked-Lists)', difficulty: 'medium', component: AddTwoNumbers},
+      { id: 8, title: '3_Longest Substring (Map<>())', difficulty: 'medium', component: LongestSubstring},
+      { id: 9, title: '704_Binary Search', difficulty: 'easy', component: BinarySearch},
+      { id: 10, title: '148_Sort Linked-Lists (Merge-sort)', difficulty: 'medium', component: SortList},
     ]);
 
     // 搜尋關鍵字

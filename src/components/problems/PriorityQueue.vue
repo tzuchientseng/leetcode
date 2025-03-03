@@ -4,17 +4,17 @@
     <button class="close-btn" @click="$emit('close')">&times;</button>
 
     <!-- 題目標題 -->
-    <h2>148_Sort List</h2>
-    <a href="https://leetcode.com/problems/sort-list/description/" target="_blank">
-      leetcode_148
+    <h2>Priority Queue</h2>
+    <a href="https://en.wikipedia.org/wiki/Priority_queue" target="_blank">
+      wiki - Prioriy Queue
     </a>
     <p>
       <strong>問題:</strong>
-      我們要對一個單向鏈表 (Singly Linked List) 進行排序，並返回排序後的鏈表。
+        ...
     </p>
     <div v-if="showMore">
       <p>
-        O(n log n) 時間複雜度 和 O(1) 空間複雜度 來解題。
+        ...
       </p>
     </div>
     <button id="toggleShowMoreButton" @click="toggleShowMore">
@@ -65,110 +65,14 @@ const copyToClipboard = async () => {
 
 const codeString = `
 /*
-  Time complexity: O(n log n)（每次遞迴 log n 層，每層 O(n) 合併）
-  Space complexity: O(1)（使用 next 指標原地排序，但遞迴棧使用 O(log n)）
+  Time complexity:
+  Space complexity:
 */
-class ListNode {
-  public val: number;
-  public next: ListNode | null;
 
-  constructor(val: number, next: ListNode | null = null) {
-    this.val = val;
-    this.next = next;
-  }
-
-  /* ------------------------------------------ create ------------------------------------------ */
-  public static create(values: number[]): ListNode | null {
-    const dummy = new ListNode(0);
-    let current = dummy;
-
-    values.forEach(value => {
-      current.next = new ListNode(value);
-      current = current.next;
-    });
-
-    return dummy.next;
-  }
-
-  /* ------------------------------------------ print ------------------------------------------ */
-  public static print(head: ListNode | null): void {
-    let current = head;
-    let result: number[] = [];
-
-    while (current !== null) {
-      result.push(current.val);
-      current = current.next;
-    }
-
-    console.log(result.join(" -> "));
-  }
-
-  /* ------------------------------------------ sortList (Merge Sort) ------------------------------------------ */
-    /* 
-    💡Concept
-      Step 1: Find the middle of the list
-      Step 2: Recursively sort both halves. 賦值
-      Step 3: Merge the sorted halves
-    */
-  public static sortList(head: ListNode | null): ListNode | null {
-    if (!head || !head.next) return head; // Base case: empty or single node list
-
-    let mid: ListNode = ListNode.getMid(head);
-    let left: ListNode | null = head;
-    let right: ListNode | null = mid.next;
-    mid.next = null; // Split into two halves
-
-    left = ListNode.sortList(left);
-    right = ListNode.sortList(right);
-
-    return ListNode.merge(left, right);
-  }
-
-  /* ------------------------------------------ getMid (Find Middle Node) ------------------------------------------ */
-  private static getMid(head: ListNode): ListNode {
-    let slow = head;
-    let fast = head;
-
-    while (fast.next && fast.next.next) {
-      slow = slow.next!;
-      fast = fast.next.next;
-    }
-
-    return slow;
-  }
-
-  /* ------------------------------------------ merge (Merge Two Sorted Lists) ------------------------------------------ */
-  private static merge(left: ListNode | null, right: ListNode | null): ListNode | null {
-    const dummy = new ListNode(0);
-    let tail = dummy;
-
-    while (left && right) {
-      if (left.val < right.val) {
-        tail.next = left;
-        left = left.next;
-      } else {
-        tail.next = right;
-        right = right.next;
-      }
-      tail = tail.next;
-    }
-
-    // Append remaining nodes
-    tail.next = left || right;
-
-    return dummy.next;
-  }
-}
 `;
 
 const testCodeString = `
-const linkedList = ListNode.create([4, 2, 1, 3]);
-const sortedList = ListNode.sortList(linkedList);
-
-console.log("Original List:");
-ListNode.print(linkedList);
-console.log("Sorted List:");
-ListNode.print(sortedList);`;
+`;
 </script>
 
 <style scoped>
@@ -192,7 +96,7 @@ ListNode.print(sortedList);`;
 h2 {
   font-size: 20px;
   margin-bottom: 0px;
-  color: #e67e22;
+  color: #27ae60;
 }
 
 p {
