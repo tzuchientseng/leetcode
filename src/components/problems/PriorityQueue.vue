@@ -10,11 +10,13 @@
     </a>
     <p>
       <strong>問題:</strong>
-        ...
+      特殊的隊列結構中，每個元素都有一個關聯的「優先級」，並且元素根據其優先級進行排序。
     </p>
     <div v-if="showMore">
       <p>
         ...
+      我們可以用 最小堆（Min Heap） 或 最大堆（Max Heap） 來實現優先隊列。這裡我們使用 最小堆（Min Heap） 來確保優先級數值較小的元素優先出列。
+      通常，優先級高的元素會被優先處理。
       </p>
     </div>
     <button id="toggleShowMoreButton" @click="toggleShowMore">
@@ -68,11 +70,116 @@ const codeString = `
   Time complexity:
   Space complexity:
 */
+class PriorityQueue<T> {
+    private heap: { value: T; priority: number }[];
 
+    constructor() {
+        this.heap = [];
+    }
+
+    // 取得父節點索引
+    private getParentIndex(index: number): number {
+        return Math.floor((index - 1) / 2);
+    }
+
+    // 取得左子節點索引
+    private getLeftChildIndex(index: number): number {
+        return 2 * index + 1;
+    }
+
+    // 取得右子節點索引
+    private getRightChildIndex(index: number): number {
+        return 2 * index + 2;
+    }
+
+    // 交換兩個元素
+    private swap(i: number, j: number): void {
+        [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]];
+    }
+
+    // 插入新元素
+    enqueue(value: T, priority: number): void {
+        const newNode = { value, priority };
+        this.heap.push(newNode);
+        this.heapifyUp();
+    }
+
+    // 重新排列堆（上浮操作）
+    private heapifyUp(): void {
+        let index = this.heap.length - 1;
+        while (index > 0) {
+            const parentIndex = this.getParentIndex(index);
+            if (this.heap[parentIndex].priority <= this.heap[index].priority) {
+                break;
+            }
+            this.swap(index, parentIndex);
+            index = parentIndex;
+        }
+    }
+
+    // 移除並返回優先級最高的元素（最小的）
+    dequeue(): T | null {
+        if (this.heap.length === 0) return null;
+        if (this.heap.length === 1) return this.heap.pop()!.value;
+
+        const root = this.heap[0].value;
+        this.heap[0] = this.heap.pop()!;
+        this.heapifyDown();
+        return root;
+    }
+
+    // 重新排列堆（下沉操作）
+    private heapifyDown(): void {
+        let index = 0;
+        while (this.getLeftChildIndex(index) < this.heap.length) {
+            let smallerChildIndex = this.getLeftChildIndex(index);
+            let rightChildIndex = this.getRightChildIndex(index);
+
+            if (
+                rightChildIndex < this.heap.length &&
+                this.heap[rightChildIndex].priority < this.heap[smallerChildIndex].priority
+            ) {
+                smallerChildIndex = rightChildIndex;
+            }
+
+            if (this.heap[index].priority <= this.heap[smallerChildIndex].priority) {
+                break;
+            }
+
+            this.swap(index, smallerChildIndex);
+            index = smallerChildIndex;
+        }
+    }
+
+    // 查看隊列頂部元素（不刪除）
+    peek(): T | null {
+        return this.heap.length > 0 ? this.heap[0].value : null;
+    }
+
+    // 確認是否為空
+    isEmpty(): boolean {
+        return this.heap.length === 0;
+    }
+}
 `;
 
 const testCodeString = `
-`;
+const pq = new PriorityQueue<string>();
+
+pq.enqueue("Task 1", 3);
+pq.enqueue("Task 2", 1);
+pq.enqueue("Task 3", 2);
+
+console.log(pq.dequeue()); // "Task 2" (priority 1)
+console.log(pq.dequeue()); // "Task 3" (priority 2)
+console.log(pq.dequeue()); // "Task 1" (priority 3)
+console.log(pq.isEmpty()); // true
+
+-> 解釋
+enqueue(value, priority): 插入一個元素，並確保它的位置符合最小堆的性質（小的優先）。
+dequeue(): 取出 最小優先級 的元素（即優先級數值最小）。
+heapifyUp(): 當新元素加入時，上浮以保持堆的結構。
+heapifyDown(): 當 dequeue() 取出根節點後，將最後一個元素移至根部並向下調整。`;
 </script>
 
 <style scoped>
