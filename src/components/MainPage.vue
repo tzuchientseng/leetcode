@@ -63,7 +63,7 @@ export default defineComponent({
       { id: 2, title: 'Fibonacci Sequences', difficulty: 'other', component: FibonacciSequences },
       { id: 3, title: 'BFS & DFS', difficulty: 'other', component: BFSAndDFS },
       { id: 4, title: 'Quick Sort', difficulty: 'other', component: QuickSort},
-      { id: 5, title: 'Prioriy Queue', difficulty: 'other', component: PriorityQueue},
+      { id: 5, title: 'Priority Queue', difficulty: 'other', component: PriorityQueue},
       { id: 6, title: '1_Two Sum', difficulty: 'easy', component: TwoSum },
       { id: 7, title: '2_Add Two Numbers (Linked-Lists)', difficulty: 'medium', component: AddTwoNumbers},
       { id: 8, title: '3_Longest Substring (Map<>())', difficulty: 'medium', component: LongestSubstring},
