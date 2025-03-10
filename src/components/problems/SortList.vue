@@ -163,10 +163,10 @@ class ListNode {
 
 const testCodeString = `
 const linkedList = ListNode.create([4, 2, 1, 3]);
-const sortedList = ListNode.sortList(linkedList);
-
 console.log("Original List:");
 ListNode.print(linkedList);
+
+const sortedList = ListNode.sortList(linkedList);
 console.log("Sorted List:");
 ListNode.print(sortedList);`;
 </script>
